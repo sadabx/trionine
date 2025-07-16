@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trionine - Open Source Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --primary-dark: #7c3aed;
+      --dark: #0f0f1b;
+      --dark-light: #1a1a2a;
+      --dark-lighter: #2e2e4d;
+      --light: #ffffff;
+      --gray: #9ca3af;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+    
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav.scrolled {
+      background-color: rgba(15, 15, 27, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--primary), #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+    
+    .nav-links li a {
+      text-decoration: none;
+      color: var(--light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-links li a:hover {
+      color: var(--primary);
+    }
+    
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width 0.3s;
+    }
+    
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+    
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 0.7rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-purple {
+      background-color: var(--primary);
+      color: var(--light);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-purple:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--light);
+      border: 2px solid var(--light);
+    }
+    
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    /* Library Hero */
+    .library-hero {
+      padding: 6rem 4rem;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .library-hero h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, var(--light), #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .library-hero p {
+      color: var(--gray);
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+    
+    /* Search Section */
+    .search-section {
+      max-width: 800px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    
+    .search-container {
+      display: flex;
+      background: var(--dark-light);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--dark-lighter);
+    }
+    
+    .search-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--light);
+      font-size: 1rem;
+    }
+    
+    .search-input:focus {
+      outline: none;
+    }
+    
+    .search-button {
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      padding: 0 2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .search-button:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* Filters */
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      padding: 0 2rem;
+    }
+    
+    .filter-btn {
+      padding: 0.6rem 1.2rem;
+      background: var(--dark-light);
+      color: var(--light);
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--primary);
+      transform: translateY(-2px);
+    }
+    
+    /* Resources Grid */
+    .resources-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    
+    .resources-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .resource-card {
+      background: var(--dark-light);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary);
+    }
+    
+    .resource-level {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .resource-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .resource-author {
+      color: var(--gray);
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .resource-meta {
+      display: flex;
+      gap: 1rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .resource-shared {
+      color: var(--gray);
+      font-size: 0.8rem;
+      margin-top: 1rem;
+    }
+    
+    /* Resource Form */
+    .resource-form {
+      background: var(--dark-light);
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 3rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .resource-form h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+    }
+    
+    .resource-form p {
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 2rem;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--dark);
+      border: 1px solid var(--dark-lighter);
+      border-radius: 0.5rem;
+      color: var(--light);
+      font-size: 1rem;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 16px 12px;
+    }
+    
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 5rem 4rem 2rem;
+      background: var(--dark);
+      color: var(--gray);
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-logo {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .footer-text {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      margin: 3rem 0;
+    }
+    
+    .footer-links div {
+      min-width: 180px;
+      text-align: left;
+    }
+    
+    .footer-links h4 {
+      color: var(--light);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .footer-links p {
+      margin-bottom: 0.8rem;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+    
+    .footer-links p:hover {
+      color: var(--primary);
+    }
+    
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .footer-social a {
+      color: var(--gray);
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+    
+    .footer-social a:hover {
+      color: var(--primary);
+    }
+    
+    .footer-bottom {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--dark-lighter);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        padding: 1.5rem 2rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .library-hero {
+        padding: 4rem 2rem;
+      }
+      
+      .library-hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .resource-form {
+        padding: 2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .library-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .search-container {
+        flex-direction: column;
+        border-radius: 0.5rem;
+      }
+      
+      .search-input {
+        border-bottom: 1px solid var(--dark-lighter);
+        border-radius: 0;
+      }
+      
+      .search-button {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="logo">TRIONINE</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="library.html">Learning</a></li>
+      <li><a href="index.html#team">Team</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="auth-buttons">
+      <a href="#" class="btn-link">Login</a>
+      <button class="btn-purple">Sign Up</button>
+    </div>
+  </nav>
+
+  <!-- Library Hero Section -->
+  <section class="library-hero">
+    <h1>Open Source Library</h1>
+    <p>Find and share educational resources freely to support learning at all levels</p>
+    
+    <div class="search-section">
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search for books, materials, or topics...">
+        <button class="search-button">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active">All Resources</button>
+    <button class="filter-btn">SSC Level</button>
+    <button class="filter-btn">Intermediate Level</button>
+    <button class="filter-btn">University Admission</button>
+    <button class="filter-btn">University Level</button>
+    <button class="filter-btn">Others</button>
+  </div>
+
+  <!-- Resources Grid -->
+  <section class="resources-grid">
+    <div class="resources-list">
+      <!-- Resource Card 1 -->
+      <div class="resource-card">
+        <div class="resource-level">SSC Level</div>
+        <h3 class="resource-title">Mathematics - 1st Paper</h3>
+        <div class="resource-author">Author: SU Ahmed</div>
+        <div class="resource-meta">
+          <span>1.2k Downloads</span>
+          <span>⭐ 4.5</span>
+        </div>
+        <div class="resource-shared">Shared by: Ahmed K. | 20 May 2025</div>
+      </div>
+      
+      <!-- Resource Card 2 -->
+      <div class="resource-card">
+        <div class="resource-level">SSC Level</div>
+        <h3 class="resource-title">Physics - Complete Guide</h3>
+        <div class="resource-author">Author: Dr. M. Rahman</div>
+        <div class="resource-meta">
+          <span>890 Downloads</span>
+          <span>⭐ 4.3</span>
+        </div>
+        <div class="resource-shared">Shared by: Nazia T. | 15 May 2025</div>
+      </div>
+      
+      <!-- Resource Card 3 -->
+      <div class="resource-card">
+        <div class="resource-level">Intermediate Level</div>
+        <h3 class="resource-title">Chemistry - 2nd Paper</h3>
+        <div class="resource-author">Author: Hafiz Chowdhury</div>
+        <div class="resource-meta">
+          <span>750 Downloads</span>
+          <span>⭐ 4.7</span>
+        </div>
+        <div class="resource-shared">Shared by: Raisa H. | 10 Apr 2025</div>
+      </div>
+      
+      <!-- Resource Card 4 -->
+      <div class="resource-card">
+        <div class="resource-level">University Admission</div>
+        <h3 class="resource-title">Admission Test Guide</h3>
+        <div class="resource-author">Author: Admission Care</div>
+        <div class="resource-meta">
+          <span>1.5k Downloads</span>
+          <span>⭐ 4.8</span>
+        </div>
+        <div class="resource-shared">Shared by: Rifat M. | 5 Apr 2025</div>
+      </div>
+      
+      <!-- Resource Card 5 -->
+      <div class="resource-card">
+        <div class="resource-level">University Level</div>
+        <h3 class="resource-title">Data Structures & Algorithms</h3>
+        <div class="resource-author">Author: CLRS</div>
+        <div class="resource-meta">
+          <span>2.3k Downloads</span>
+          <span>⭐ 4.9</span>
+        </div>
+        <div class="resource-shared">Shared by: Sadab K. | 1 Apr 2025</div>
+      </div>
+      
+      <!-- Resource Card 6 -->
+      <div class="resource-card">
+        <div class="resource-level">Others</div>
+        <h3 class="resource-title">IELTS Preparation Guide</h3>
+        <div class="resource-author">Author: British Council</div>
+        <div class="resource-meta">
+          <span>980 Downloads</span>
+          <span>⭐ 4.6</span>
+        </div>
+        <div class="resource-shared">Shared by: Tania H. | 28 Mar 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resource Submission Form -->
+  <section class="resource-form">
+    <h2>Share your resources</h2>
+    <p>Contribute to our open-source library and help others learn</p>
+    
+    <form id="resourceForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="book-title">Book Title</label>
+          <input type="text" id="book-title" class="form-control" placeholder="Enter the book title" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" id="author" class="form-control" placeholder="Enter the author's name" required>
+        </div>
+      </div>
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="educational-level">Educational Level</label>
+          <select id="educational-level" class="form-control" required>
+            <option value="">Select educational level</option>
+            <option value="ssc">SSC Level</option>
+            <option value="intermediate">Intermediate Level</option>
+            <option value="admission">University Admission</option>
+            <option value="university">University Level</option>
+            <option value="other">Others</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" class="form-control" placeholder="Eg. Mathematics, Physics, etc." required>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="share-type">Share Type</label>
+        <select id="share-type" class="form-control" required>
+          <option value="">Select share type</option>
+          <option value="pdf">PDF</option>
+          <option value="link">Link</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" class="form-control" placeholder="Add a brief description of the book or resource" required></textarea>
+      </div>
+      
+      <button type="submit" class="btn-purple submit-btn">Share Resource</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo logo">TRIONINE</div>
+      <p class="footer-text">Pushing the boundaries of digital experiences through innovative design and cutting-edge technology.</p>
+      
+      <div class="footer-links">
+        <div>
+          <h4>Quick Links</h4>
+          <p>Home</p>
+          <p>About</p>
+          <p>Projects</p>
+          <p>Learning</p>
+          <p>Team</p>
+          <p>Contact</p>
+        </div>
+        
+        <div>
+          <h4>Projects</h4>
+          <p>Sector 11</p>
+          <p>MindFlow</p>
+          <p>Pixel Dungeons</p>
+          <p>EchoVerse</p>
+          <p>View All</p>
+        </div>
+        
+        <div>
+          <h4>Resources</h4>
+          <p>Blog</p>
+          <p>Documentation</p>
+          <p>Press Kit</p>
+          <p>Careers</p>
+          <p>FAQ</p>
+        </div>
+        
+        <div>
+          <h4>Legal</h4>
+          <p>Privacy Policy</p>
+          <p>Terms of Service</p>
+          <p>Cookie Policy</p>
+          <p>Licenses</p>
+        </div>
+      </div>
+      
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="https://discord.gg/4JUrBQYdpz"><i class="fab fa-discord"></i></a>
+      </div>
+      
+      <div class="footer-bottom">
+        © 2025 Trionine Studios. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle (would be in main JS file)
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+      
+      // Close mobile menu when clicking a link
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          hamburger.classList.remove('active');
+        });
+      });
+    }
+    
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Form submission
+    const form = document.getElementById('resourceForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you for contributing to our open source library! Your resource will be reviewed and added soon.');
+      form.reset();
+    });
+    
+    // Filter buttons
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        // In real implementation, this would filter the resources
+        alert(`Filtering by: ${button.textContent}`);
+      });
+    });
+    
+    // Search functionality
+    const searchButton = document.querySelector('.search-button');
+    searchButton.addEventListener('click', () => {
+      const searchTerm = document.querySelector('.search-input').value;
+      if (searchTerm.trim() !== '') {
+        alert(`Searching for: ${searchTerm}`);
+        // In a real implementation, this would filter the resources
+      }
+    });
+    
+    // Allow search on Enter key
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchButton.click();
+      }
+    });
+  </script>
+</body>
+</html>
