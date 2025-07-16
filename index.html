@@ -1,548 +1,1145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trionine - Discover the Best Free Learning Resources</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #f97316;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --gray: #94a3b8;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background-color: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 20px;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto 40px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
-        
-        .hero-image {
-            max-width: 800px;
-            margin: 0 auto;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .hero-image img {
-            width: 100%;
-            display: block;
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-        
-        .feature-card h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-        
-        /* How It Works */
-        .how-it-works {
-            padding: 80px 0;
-            background-color: #f8fafc;
-        }
-        
-        .steps {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-        
-        .step {
-            text-align: center;
-            max-width: 250px;
-        }
-        
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0 auto 20px;
-        }
-        
-        /* CTA Section */
-        .cta {
-            padding: 80px 0;
-            text-align: center;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-        }
-        
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta p {
-            max-width: 600px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        /* Testimonial */
-        .testimonial {
-            padding: 80px 0;
-            text-align: center;
-        }
-        
-        .testimonial-content {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            position: relative;
-        }
-        
-        .testimonial-content:before {
-            content: '"';
-            font-size: 100px;
-            position: absolute;
-            top: -30px;
-            left: 20px;
-            color: var(--primary);
-            opacity: 0.1;
-            font-family: serif;
-        }
-        
-        .testimonial-text {
-            font-size: 20px;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        
-        .testimonial-author {
-            font-weight: 700;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 60px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-column h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--gray);
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-column ul li a {
-            color: white;
-            text-decoration: none;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .footer-column ul li a:hover {
-            opacity: 1;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            opacity: 0.7;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trionine - Digital Experience Studio</title>
+  <meta name="description" content="Creative studio specializing in innovative games and applications that push boundaries">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --primary-dark: #7c3aed;
+      --dark: #0f0f1b;
+      --dark-light: #1a1a2a;
+      --dark-lighter: #2e2e4d;
+      --light: #ffffff;
+      --gray: #9ca3af;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+    
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav.scrolled {
+      background-color: rgba(15, 15, 27, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--primary), #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+    
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+    
+    .nav-links li a {
+      text-decoration: none;
+      color: var(--light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-links li a:hover {
+      color: var(--primary);
+    }
+    
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width 0.3s;
+    }
+    
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+    
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 0.7rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-purple {
+      background-color: var(--primary);
+      color: var(--light);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-purple:hover {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--light);
+      border: 2px solid var(--light);
+    }
+    
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .btn-link {
+      background: transparent;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .btn-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Hamburger menu for mobile */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      z-index: 101;
+    }
+    
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--light);
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    /* Hero section */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .hero-text {
+      flex: 1;
+      max-width: 600px;
+    }
+    
+    .hero-text h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, var(--light), #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hero-text h1 span {
+      background: linear-gradient(90deg, var(--primary), #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hero-text p {
+      color: var(--gray);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    /* 3D Cube */
+    .cube-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+    
+    .cube-3d {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spin 15s linear infinite;
+      transition: transform 0.5s;
+    }
+    
+    .cube-3d:hover {
+      animation-play-state: paused;
+    }
+    
+    .cube-3d div {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: var(--dark-light);
+      color: var(--light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      font-weight: bold;
+      border: 2px solid var(--primary);
+      opacity: 0.9;
+      transition: all 0.3s;
+    }
+    
+    .cube-3d div:hover {
+      background: var(--primary);
+      color: var(--dark);
+      opacity: 1;
+    }
+    
+    .front  { transform: translateZ(100px); }
+    .back   { transform: rotateY(180deg) translateZ(100px); }
+    .right  { transform: rotateY(90deg) translateZ(100px); }
+    .left   { transform: rotateY(-90deg) translateZ(100px); }
+    .top    { transform: rotateX(90deg) translateZ(100px); }
+    .bottom { transform: rotateX(-90deg) translateZ(100px); }
+    
+    @keyframes spin {
+      0% { transform: rotateX(0) rotateY(0); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+    
+    /* Sections */
+    section {
+      padding: 6rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.8rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, var(--light), #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      color: var(--gray);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+    
+    /* About section */
+    .about-content {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    
+    .about-text {
+      flex: 1;
+    }
+    
+    .about-image {
+      flex: 1;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .stats {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+    
+    .stat {
+      text-align: center;
+      padding: 2rem;
+      background: var(--dark-light);
+      border-radius: 1rem;
+      min-width: 180px;
+      transition: transform 0.3s;
+    }
+    
+    .stat:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .stat h2 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat p {
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    /* Projects section */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .card {
+      background: var(--dark-light);
+      padding: 2rem;
+      border-radius: 1rem;
+      color: var(--light);
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary);
+    }
+    
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    
+    .card p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .tag {
+      background: var(--dark-lighter);
+      color: var(--primary);
+      font-size: 0.75rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    
+    /* Team section */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .team-card {
+      background: var(--dark-light);
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    
+    .team-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1.5rem;
+      border: 3px solid var(--primary);
+    }
+    
+    .team-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .team-card p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    
+    .social-links a {
+      color: var(--gray);
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--primary);
+    }
+    
+    /* Contact section */
+    .contact-content {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    
+    .contact-info {
+      flex: 1;
+    }
+    
+    .contact-info p {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .contact-info i {
+      color: var(--primary);
+      font-size: 1.2rem;
+      width: 24px;
+    }
+    
+    .form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .form-label {
+      font-weight: 600;
+    }
+    
+    .form-input, .form-textarea {
+      background: var(--dark-light);
+      border: 1px solid var(--dark-lighter);
+      color: var(--light);
+      padding: 0.9rem 1.2rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    
+    .form-textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 5rem 4rem 2rem;
+      background: var(--dark);
+      color: var(--gray);
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-logo {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .footer-text {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      margin: 3rem 0;
+    }
+    
+    .footer-links div {
+      min-width: 180px;
+      text-align: left;
+    }
+    
+    .footer-links h4 {
+      color: var(--light);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .footer-links p {
+      margin-bottom: 0.8rem;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+    
+    .footer-links p:hover {
+      color: var(--primary);
+    }
+    
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .footer-social a {
+      color: var(--gray);
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+    
+    .footer-social a:hover {
+      color: var(--primary);
+    }
+    
+    .footer-bottom {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--dark-lighter);
+      font-size: 0.9rem;
+    }
+    
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: var(--light);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 99;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    .delay-4 { animation-delay: 0.8s; }
+    
+    /* Responsive design */
+    @media (max-width: 1024px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 4rem 2rem;
+      }
+      
+      .hero-text {
+        margin-bottom: 3rem;
+      }
+      
+      .hero-buttons {
+        justify-content: center;
+      }
+      
+      .about-content {
+        flex-direction: column;
+      }
+      
+      .contact-content {
+        flex-direction: column;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        padding: 1.5rem 2rem;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        background: var(--dark-light);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        transition: right 0.5s ease;
+        z-index: 100;
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .hamburger.active div:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+      
+      .hamburger.active div:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .hamburger.active div:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+      
+      section {
+        padding: 4rem 2rem;
+      }
+      
+      .section-title {
+        font-size: 2.2rem;
+      }
+      
+      .hero-text h1 {
+        font-size: 2.8rem;
+      }
+      
+      .stats {
+        gap: 1.5rem;
+      }
+      
+      .stat {
+        min-width: 140px;
+        padding: 1.5rem;
+      }
+      
+      .footer-links {
+        gap: 2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .cube-3d {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .front  { transform: translateZ(75px); }
+      .back   { transform: rotateY(180deg) translateZ(75px); }
+      .right  { transform: rotateY(90deg) translateZ(75px); }
+      .left   { transform: rotateY(-90deg) translateZ(75px); }
+      .top    { transform: rotateX(90deg) translateZ(75px); }
+      .bottom { transform: rotateX(-90deg) translateZ(75px); }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">Trionine</div>
-                <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#how-it-works">How It Works</a>
-                    <a href="#testimonials">Testimonials</a>
-                    <a href="#" class="btn btn-secondary">Sign In</a>
-                </div>
-            </nav>
-        </div>
-    </header>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="logo">TRIONINE</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="auth-buttons">
+      <a href="#" class="btn-link">Login</a>
+      <button class="btn-purple">Sign Up</button>
+    </div>
+    <div class="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Find the <span style="color: var(--primary);">Best YouTube Playlists & Free Books</span></h1>
-            <p>Stop wasting time on low-quality tutorials. Trionine lets the community surface the best educational content so you can learn faster.</p>
-            <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Explore Top Playlists</a>
-                <a href="#" class="btn btn-secondary">Browse Free Books</a>
-            </div>
-            <div class="hero-image">
-                <img src="https://via.placeholder.com/800x450?text=Trionine+Dashboard+Preview" alt="Trionine Platform Preview">
-            </div>
-        </div>
-    </section>
+  <!-- Hero Section -->
+  <section class="hero fade-in">
+    <div class="hero-text">
+      <h1>Crafting Digital <span>Experiences</span></h1>
+      <p class="delay-1">We create innovative games and apps that push the boundaries of what's possible in digital entertainment and productivity.</p>
+      <div class="hero-buttons delay-2">
+        <button class="btn-purple">Explore Our Work</button>
+        <button class="btn-outline">Get In Touch</button>
+      </div>
+    </div>
+    <div class="cube-container delay-3">
+      <div class="cube-3d">
+        <div class="front"><i class="fas fa-gamepad"></i></div>
+        <div class="back"><i class="fas fa-code"></i></div>
+        <div class="right"><i class="fas fa-paint-brush"></i></div>
+        <div class="left"><i class="fas fa-mobile-alt"></i></div>
+        <div class="top"><i class="fas fa-brain"></i></div>
+        <div class="bottom"><i class="fas fa-rocket"></i></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose Trionine</h2>
-                <p>The community-powered platform that helps you find quality learning resources faster</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔥</div>
-                    <h3>Community-Ranked Content</h3>
-                    <p>See which playlists & books real learners recommend – no more guessing!</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3>Free Book Sharing</h3>
-                    <p>Download textbooks (PDFs/GDrive) for SSC, HSC, University, and more – legally shared.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚫</div>
-                    <h3>No Duplicates, No Spam</h3>
-                    <p>AI filters + community votes ensure only unique, high-quality resources stay.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Track Your Learning</h3>
-                    <p>Monitor progress across videos & books with achievement badges.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- About Section -->
+  <section id="about" class="fade-in">
+    <h2 class="section-title">About Trionine</h2>
+    <p class="section-subtitle">Creating extraordinary digital experiences since 2023</p>
+    
+    <div class="about-content">
+      <div class="about-text">
+        <p>Trionine is an innovative digital studio specializing in cutting-edge games, applications, and interactive experiences. Founded by a team of passionate developers, designers, and storytellers, we combine technical excellence with creative vision to craft products that engage, inspire, and push boundaries.</p>
+        <p>Our approach blends artistic expression with technological innovation. We're not just building products - we're creating worlds, telling stories, and solving problems through immersive digital experiences.</p>
+        <p>From blockchain-powered gaming to AI-enhanced productivity tools, our projects represent explorations at the intersection of technology and human experience.</p>
+      </div>
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Creative team working in studio">
+      </div>
+    </div>
+    
+    <div class="stats">
+      <div class="stat">
+        <h2>8+</h2>
+        <p>Projects</p>
+      </div>
+      <div class="stat">
+        <h2>5+</h2>
+        <p>Platforms</p>
+      </div>
+      <div class="stat">
+        <h2>3+</h2>
+        <p>Years</p>
+      </div>
+      <div class="stat">
+        <h2>15+</h2>
+        <p>Team Members</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-title">
-                <h2>How It Works</h2>
-                <p>Getting started with Trionine is simple and straightforward</p>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Search</h3>
-                    <p>Enter a topic (e.g., "Python programming")</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Vote</h3>
-                    <p>Upvote/downvote playlists & books</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Learn</h3>
-                    <p>Follow top-ranked resources + track progress</p>
-                </div>
-            </div>
+  <!-- Projects Section -->
+  <section id="projects" class="fade-in">
+    <h2 class="section-title">Our Projects</h2>
+    <p class="section-subtitle">Innovation at work - explore our portfolio</p>
+    
+    <div class="grid">
+      <div class="card fade-in delay-1">
+        <h3>Sector 11</h3>
+        <p>Immersive battle royale FPS set in alternative history with blockchain-powered economy and player-owned assets.</p>
+        <div class="tags">
+          <span class="tag">Unity</span>
+          <span class="tag">PC/Console</span>
+          <span class="tag">Blockchain</span>
+          <span class="tag">NFT</span>
         </div>
-    </section>
-
-    <!-- Example Use Case -->
-    <section class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Perfect For Students</h2>
-                <p>Trying to learn HSC Math 1st Paper?</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>Find Top Playlists</h3>
-                    <p>Discover the best SU Ahmed math video tutorials ranked by students</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Download Free Books</h3>
-                    <p>Access shared PDF textbooks from teachers and peers</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Join Study Groups</h3>
-                    <p>Connect with other students preparing for the same exams</p>
-                </div>
-            </div>
+      </div>
+      
+      <div class="card fade-in delay-2">
+        <h3>MindFlow</h3>
+        <p>AI-enhanced productivity suite that adapts to your cognitive patterns to optimize focus and creativity.</p>
+        <div class="tags">
+          <span class="tag">React Native</span>
+          <span class="tag">AI</span>
+          <span class="tag">Mobile</span>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Help build the future of open education!</h2>
-            <p>Contribute to the community by sharing quality resources</p>
-            <div style="display: flex; gap: 20px; justify-content: center;">
-                <a href="#" class="btn btn-secondary" style="background-color: white; color: var(--primary);">Submit a Playlist</a>
-                <a href="#" class="btn btn-secondary" style="background-color: white; color: var(--primary);">Share a Free Book</a>
-            </div>
+      </div>
+      
+      <div class="card fade-in delay-3">
+        <h3>Pixel Dungeons</h3>
+        <p>Procedurally generated roguelike with modern mechanics and retro aesthetic. Daily challenges with global leaderboards.</p>
+        <div class="tags">
+          <span class="tag">Unity</span>
+          <span class="tag">Mobile</span>
+          <span class="tag">Procedural</span>
         </div>
-    </section>
-
-    <!-- Testimonial -->
-    <section class="testimonial" id="testimonials">
-        <div class="container">
-            <div class="testimonial-content">
-                <p class="testimonial-text">Trionine saved me 20+ hours finding quality C++ tutorials. The voting system actually works!</p>
-                <p class="testimonial-author">– Rahim, CS Student</p>
-            </div>
+      </div>
+      
+      <div class="card fade-in delay-1">
+        <h3>EchoVerse</h3>
+        <p>Augmented reality platform that layers interactive soundscapes and visual elements onto physical spaces.</p>
+        <div class="tags">
+          <span class="tag">AR</span>
+          <span class="tag">iOS/Android</span>
+          <span class="tag">Spatial Audio</span>
         </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="cta" style="background: white; color: var(--dark); padding: 60px 0;">
-        <div class="container">
-            <h2 style="color: var(--primary);">Start Learning Smarter – For Free</h2>
-            <a href="#" class="btn btn-primary">Sign Up Now</a>
+      </div>
+      
+      <div class="card fade-in delay-2">
+        <h3>SoundScape</h3>
+        <p>Generative music application using machine learning to create personalized compositions based on mood and activity.</p>
+        <div class="tags">
+          <span class="tag">TensorFlow</span>
+          <span class="tag">Web</span>
+          <span class="tag">ML</span>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Trionine</h3>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">API</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Guides</a></li>
-                        <li><a href="#">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>Trionine is a community platform. We don't host content – we organize it.</p>
-                <p>&copy; 2023 Trionine. All rights reserved.</p>
-            </div>
+      </div>
+      
+      <div class="card fade-in delay-3">
+        <h3>TimeShift</h3>
+        <p>Narrative puzzle game where time manipulation affects both environment and story. Branching timelines with multiple endings.</p>
+        <div class="tags">
+          <span class="tag">Unreal</span>
+          <span class="tag">PC/Console</span>
+          <span class="tag">Story-Driven</span>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Simple JavaScript for demo purposes
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+  <!-- Team Section -->
+  <section id="team" class="fade-in">
+    <h2 class="section-title">Our Team</h2>
+    <p class="section-subtitle">The creative minds behind Trionine</p>
+    
+    <div class="team-grid">
+      <div class="team-card fade-in delay-1">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Sadab Khan" class="team-avatar">
+        <h3>Sadab Khan</h3>
+        <p>Lead Developer & Founder</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      
+      <div class="team-card fade-in delay-2">
+        <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Sam Rodriguez" class="team-avatar">
+        <h3>Sam Rodriguez</h3>
+        <p>Creative Director</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-artstation"></i></a>
+        </div>
+      </div>
+      
+      <div class="team-card fade-in delay-3">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jordan Lee" class="team-avatar">
+        <h3>Jordan Lee</h3>
+        <p>Game Designer</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      
+      <div class="team-card fade-in delay-4">
+        <img src="https://randomuser.me/api/portraits/women/90.jpg" alt="Taylor Kim" class="team-avatar">
+        <h3>Taylor Kim</h3>
+        <p>UX/UI Designer</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-dribbble"></i></a>
+          <a href="#"><i class="fab fa-behance"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="fade-in">
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="section-subtitle">Have a project in mind or want to collaborate?</p>
+    
+    <div class="contact-content">
+      <div class="contact-info">
+        <p><i class="fas fa-envelope"></i> hello@trionine.com</p>
+        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Innovation Drive, San Francisco, CA 94107</p>
+        <p><i class="fas fa-clock"></i> Monday - Friday: 9AM - 6PM PST</p>
+        
+        <div class="social-links" style="justify-content: flex-start; margin-top: 2rem;">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="https://discord.gg/4JUrBQYdpz"><i class="fab fa-discord"></i></a>
+        </div>
+      </div>
+      
+      <form class="form">
+        <div class="form-group">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" id="name" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email" class="form-label">Your Email</label>
+          <input type="email" id="email" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="subject" class="form-label">Subject</label>
+          <input type="text" id="subject" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="message" class="form-label">Your Message</label>
+          <textarea id="message" class="form-textarea" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-purple">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="fade-in">
+    <div class="footer-content">
+      <div class="footer-logo logo">TRIONINE</div>
+      <p class="footer-text">Pushing the boundaries of digital experiences through innovative design and cutting-edge technology.</p>
+      
+      <div class="footer-links">
+        <div>
+          <h4>Quick Links</h4>
+          <p>Home</p>
+          <p>About</p>
+          <p>Projects</p>
+          <p>Team</p>
+          <p>Contact</p>
+        </div>
+        
+        <div>
+          <h4>Projects</h4>
+          <p>Sector 11</p>
+          <p>MindFlow</p>
+          <p>Pixel Dungeons</p>
+          <p>EchoVerse</p>
+          <p>View All</p>
+        </div>
+        
+        <div>
+          <h4>Resources</h4>
+          <p>Blog</p>
+          <p>Documentation</p>
+          <p>Press Kit</p>
+          <p>Careers</p>
+          <p>FAQ</p>
+        </div>
+        
+        <div>
+          <h4>Legal</h4>
+          <p>Privacy Policy</p>
+          <p>Terms of Service</p>
+          <p>Cookie Policy</p>
+          <p>Licenses</p>
+        </div>
+      </div>
+      
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="https://discord.gg/4JUrBQYdpz"><i class="fab fa-discord"></i></a>
+      </div>
+      
+      <div class="footer-bottom">
+        © 2025 Trionine Studios. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top button -->
+  <div class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+      });
+    });
+    
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Back to top button
+    const backToTopButton = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
+    });
+    
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Form submission
+    const form = document.querySelector('.form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you for your message! We will get back to you soon.');
+      form.reset();
+    });
+    
+    // Animation on scroll
+    const fadeElements = document.querySelectorAll('.fade-in');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(element => {
+      element.style.opacity = 0;
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(element);
+    });
+  </script>
 </body>
 </html>
