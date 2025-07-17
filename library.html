@@ -93,41 +93,43 @@
       transition: width 0.3s;
     }
     
+    /* Updated Auth Buttons */
     .auth-buttons {
       display: flex;
       gap: 1rem;
       align-items: center;
     }
     
-    .btn {
+    .login-btn {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.7rem 1.5rem;
+      border-radius: 9999px;
+      transition: all 0.3s;
+    }
+    
+    .login-btn:hover {
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .signup-btn {
+      background-color: var(--primary);
+      color: var(--light);
+      border: 2px solid var(--primary);
       padding: 0.7rem 1.5rem;
       border-radius: 9999px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s;
+      text-decoration: none;
     }
     
-    .btn-purple {
-      background-color: var(--primary);
-      color: var(--light);
-      border: 2px solid var(--primary);
-    }
-    
-    .btn-purple:hover {
+    .signup-btn:hover {
       background-color: var(--primary-dark);
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-    }
-    
-    .btn-outline {
-      background: transparent;
-      color: var(--light);
-      border: 2px solid var(--light);
-    }
-    
-    .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-2px);
     }
     
     /* Library Hero */
@@ -302,13 +304,6 @@
       font-size: 0.9rem;
     }
     
-    .resource-department {
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
-    
     .resource-meta {
       display: flex;
       justify-content: space-between;
@@ -333,6 +328,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      text-decoration: none;
     }
     
     .download-btn:hover {
@@ -545,6 +541,15 @@
       .search-button {
         padding: 1rem;
       }
+      
+      .auth-buttons {
+        gap: 0.5rem;
+      }
+      
+      .login-btn, .signup-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -561,8 +566,8 @@
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
     <div class="auth-buttons">
-      <a href="#" class="btn-link">Login</a>
-      <button class="btn-purple">Sign Up</button>
+      <a href="#" class="login-btn">Login</a>
+      <a href="#" class="signup-btn">Sign Up</a>
     </div>
   </nav>
 
@@ -593,7 +598,7 @@
   <section class="resources-grid">
     <div class="resources-list" id="resourcesList">
       <!-- Resource Card 1 -->
-      <div class="resource-card" data-level="ssc" data-department="">
+      <div class="resource-card" data-level="ssc">
         <div class="resource-cover" style="background-image: url('https://i.postimg.cc/2yDM3RRX/R.jpg');">
           <div class="resource-level">University Level</div>
         </div>
@@ -602,139 +607,81 @@
           <div class="resource-author">Author: E. Balagurusamy</div>
           <div class="resource-meta">
             <div class="resource-rating">⭐ 4.5</div>
-            <button class="download-btn" data-download="https://drive.google.com/file/d/17NmcQGKPpsHsUMmcaspXGie2Xl7AAX0T/view?usp=drive_link">
+            <a href="https://drive.google.com/uc?export=download&id=17NmcQGKPpsHsUMmcaspXGie2Xl7AAX0T" class="download-btn">
               <i class="fas fa-download"></i> Download
-            </button>
+            </a>
           </div>
-          <div class="resource-shared">Shared by: Unknown| 20 May 2025</div>
+          <div class="resource-shared">Shared by: Unknown | 20 May 2025</div>
         </div>
       </div>
       
       <!-- Resource Card 2 -->
-      <div class="resource-card" data-level="university" data-department="cse">
+      <div class="resource-card" data-level="university">
         <div class="resource-cover" style="background-image: url('https://i.postimg.cc/hjxF5Yj0/Screenshot-2025-07-17-191331.png');">
           <div class="resource-level">University Level</div>
         </div>
         <div class="resource-content">
           <h3 class="resource-title">CSE Exam Kit (L1T1)</h3>
-          <div class="resource-author">Publication: Gyan Bitan </div>
-          <!-- <div class="resource-department">Computer Science & Engineering</div> -->
+          <div class="resource-author">Publication: Gyan Bitan</div>
           <div class="resource-meta">
             <div class="resource-rating">⭐ 4.1</div>
-            <button class="download-btn" data-download="https://drive.google.com/file/d/1srAHIa7hTdg7qw--o0LRgyRGPLdwq7z7/view?usp=drive_link">
+            <a href="https://drive.google.com/uc?export=download&id=1srAHIa7hTdg7qw--o0LRgyRGPLdwq7z7" class="download-btn">
               <i class="fas fa-download"></i> Download
-            </button>
+            </a>
           </div>
           <div class="resource-shared">Shared by: Shisir | 5 April 2025</div>
         </div>
       </div>
       
       <!-- Resource Card 3 -->
-      <div class="resource-card" data-level="intermediate" data-department="">
+      <div class="resource-card" data-level="intermediate">
         <div class="resource-cover" style="background-image: url('https://i.postimg.cc/fk4cMZGJ/1.webp');">
           <div class="resource-level">University Level</div>
         </div>
         <div class="resource-content">
           <h3 class="resource-title">Integral Calculus & Differential Equation by Abdul Matin</h3>
-          <div class="resource-author">Author:  Dr. Abdul Matin</div>
+          <div class="resource-author">Author: Dr. Abdul Matin</div>
           <div class="resource-meta">
             <div class="resource-rating">⭐ 4.1</div>
-            <button class="download-btn" data-download="https://drive.google.com/file/d/1B_MtfBqXARidoFXtdKKYwrntlCpvuiut/view?usp=drive_link">
+            <a href="https://drive.google.com/uc?export=download&id=1B_MtfBqXARidoFXtdKKYwrntlCpvuiut" class="download-btn">
               <i class="fas fa-download"></i> Download
-            </button>
+            </a>
           </div>
           <div class="resource-shared">Shared by: Swaccho | 10 Apr 2025</div>
         </div>
       </div>
       
-      <!-- Resource Card 4 
-      <div class="resource-card" data-level="admission" data-department="">
-        <div class="resource-cover" style="background-image: url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80');">
-          <div class="resource-level">University Admission</div>
-        </div>
-        <div class="resource-content">
-          <h3 class="resource-title"><a href="#">Admission Test Guide</a></h3>
-          <div class="resource-author">Author: Admission Care</div>
-          <div class="resource-meta">
-            <div class="resource-rating">⭐ 4.8</div>
-            <button class="download-btn">
-              <i class="fas fa-download"></i> Download
-            </button>
-          </div>
-          <div class="resource-shared">Shared by: Rifat M. | 5 Apr 2025</div>
-        </div>
-      </div>
-      -->
-      <!-- Resource Card 5 
-      <div class="resource-card" data-level="university" data-department="cse">
-        <div class="resource-cover" style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-          <div class="resource-level">University Level</div>
-        </div>
-        <div class="resource-content">
-          <h3 class="resource-title"><a href="#">Data Structures & Algorithms</a></h3>
-          <div class="resource-author">Author: CLRS</div>
-          <div class="resource-department">Computer Science & Engineering</div>
-          <div class="resource-meta">
-            <div class="resource-rating">⭐ 4.9</div>
-            <button class="download-btn">
-              <i class="fas fa-download"></i> Download
-            </button>
-          </div>
-          <div class="resource-shared">Shared by: Sadab K. | 1 Apr 2025</div>
-        </div>
-      </div>
-      
-      <!-- Resource Card 6 
-      <div class="resource-card" data-level="other" data-department="">
-        <div class="resource-cover" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-          <div class="resource-level">Others</div>
-        </div>
-        <div class="resource-content">
-          <h3 class="resource-title"><a href="#">IELTS Preparation Guide</a></h3>
-          <div class="resource-author">Author: British Council</div>
-          <div class="resource-meta">
-            <div class="resource-rating">⭐ 4.6</div>
-            <button class="download-btn">
-              <i class="fas fa-download"></i> Download
-            </button>
-          </div>
-          <div class="resource-shared">Shared by: Tania H. | 28 Mar 2025</div>
-        </div>
-      </div>
-      
-      <!-- Resource Card 7 -->
-      <div class="resource-card" data-level="university" data-department="eee">
+      <!-- Resource Card 4 -->
+      <div class="resource-card" data-level="university">
         <div class="resource-cover" style="background-image: url('https://i.postimg.cc/yxyqyr6r/Screenshot-2025-07-17-202658.png');">
           <div class="resource-level">University Level</div>
         </div>
         <div class="resource-content">
           <h3 class="resource-title">Principles of Electronics</h3>
           <div class="resource-author">Author: V.K. Mehta & Rohit Mehta</div>
-          <!-- <div class="resource-department">Electrical & Electronic Engineering</div> -->
           <div class="resource-meta">
             <div class="resource-rating">⭐ 4.4</div>
-            <button class="download-btn" data-download="https://drive.google.com/file/d/1unGd_4fH2EO_91fjtxpiaTbRSKreluXB/view?usp=sharing">
+            <a href="https://drive.google.com/uc?export=download&id=1unGd_4fH2EO_91fjtxpiaTbRSKreluXB" class="download-btn">
               <i class="fas fa-download"></i> Download
-            </button>
+            </a>
           </div>
           <div class="resource-shared">Shared by: Swaccho | 25 Mar 2025</div>
         </div>
       </div>
       
-      <!-- Resource Card 8 -->
-      <div class="resource-card" data-level="university" data-department="math">
+      <!-- Resource Card 5 -->
+      <div class="resource-card" data-level="university">
         <div class="resource-cover" style="background-image: url('https://i.postimg.cc/Yq8fmKBL/1706207226.webp');">
           <div class="resource-level">University Level</div>
         </div>
         <div class="resource-content">
-          <h3 class="resource-title"><a href="#">Differential Calculus by Das & Mukherjee</a></h3>
-          <div class="resource-author">Author: B.C. Das, B.N. Mukherjee </div>
-          <!--<div class="resource-department">Business Administration</div> -->
+          <h3 class="resource-title">Differential Calculus by Das & Mukherjee</h3>
+          <div class="resource-author">Author: B.C. Das, B.N. Mukherjee</div>
           <div class="resource-meta">
             <div class="resource-rating">⭐ 4.3</div>
-            <button class="download-btn" data-download="https://drive.google.com/file/d/1MdZBIcHwn3VMCNAWhd_PpdjwYBay9LwK/view?usp=drive_link">
+            <a href="https://drive.google.com/uc?export=download&id=1MdZBIcHwn3VMCNAWhd_PpdjwYBay9LwK" class="download-btn">
               <i class="fas fa-download"></i> Download
-            </button>
+            </a>
           </div>
           <div class="resource-shared">Shared by: Swaccho | 20 Mar 2025</div>
         </div>
@@ -760,31 +707,16 @@
         </div>
       </div>
       
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="educational-level">Educational Level</label>
-          <select id="educational-level" class="form-control" required>
-            <option value="">Select educational level</option>
-            <option value="ssc">SSC Level</option>
-            <option value="intermediate">Intermediate Level</option>
-            <option value="admission">University Admission</option>
-            <option value="university">University Level</option>
-            <option value="other">Others</option>
-          </select>
-        </div>
-        
-        <div class="form-group" id="departmentGroup" style="display: none;">
-          <label for="department">Department</label>
-          <select id="department" class="form-control">
-            <option value="">Select department</option>
-            <option value="cse">Computer Science & Engineering</option>
-            <option value="eee">Electrical & Electronic Engineering</option>
-            <option value="bba">Business Administration</option>
-            <option value="eng">English</option>
-            <option value="eco">Economics</option>
-            <option value="law">Law</option>
-          </select>
-        </div>
+      <div class="form-group">
+        <label for="educational-level">Educational Level</label>
+        <select id="educational-level" class="form-control" required>
+          <option value="">Select educational level</option>
+          <option value="ssc">SSC Level</option>
+          <option value="intermediate">Intermediate Level</option>
+          <option value="admission">University Admission</option>
+          <option value="university">University Level</option>
+          <option value="other">Others</option>
+        </select>
       </div>
       
       <div class="form-group">
@@ -910,18 +842,6 @@
       e.preventDefault();
       alert('Thank you for contributing to our open source library! Your resource will be reviewed and added soon.');
       form.reset();
-      document.getElementById('departmentGroup').style.display = 'none';
-    });
-    
-    // Show department field only when university level is selected
-    const educationalLevel = document.getElementById('educational-level');
-    educationalLevel.addEventListener('change', function() {
-      const departmentGroup = document.getElementById('departmentGroup');
-      if (this.value === 'university') {
-        departmentGroup.style.display = 'block';
-      } else {
-        departmentGroup.style.display = 'none';
-      }
     });
     
     // Filter buttons
@@ -963,9 +883,8 @@
         resourceCards.forEach(card => {
           const title = card.querySelector('.resource-title').textContent.toLowerCase();
           const author = card.querySelector('.resource-author').textContent.toLowerCase();
-          const department = card.dataset.department ? card.dataset.department.toLowerCase() : '';
           
-          if (title.includes(searchTerm) || author.includes(searchTerm) || department.includes(searchTerm)) {
+          if (title.includes(searchTerm) || author.includes(searchTerm)) {
             card.style.display = 'block';
           } else {
             card.style.display = 'none';
@@ -993,19 +912,6 @@
       if (e.key === 'Enter') {
         performSearch();
       }
-    });
-    
-    // Download button functionality
-    const downloadButtons = document.querySelectorAll('.download-btn');
-    downloadButtons.forEach(button => {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-        const card = this.closest('.resource-card');
-        const title = card.querySelector('.resource-title').textContent;
-        
-        // In a real implementation, this would trigger the actual download
-        alert(`Downloading: ${title}`);
-      });
     });
   </script>
 </body>
