@@ -1,1 +1,1 @@
-[#TrioNine](https://trionine.netlify.app/)
+[TrioNine](https://trionine.netlify.app/)
