@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --primary: #8b5cf6;
@@ -130,6 +131,39 @@
       background-color: var(--primary-dark);
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: var(--danger);
+      color: white;
     }
     
     /* Auth Container */
@@ -382,6 +416,32 @@
     .auth-footer a:hover {
       text-decoration: underline;
     }
+
+    /* Message styles */
+    .message {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .message.success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--success);
+      color: var(--success);
+    }
+
+    .message.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--danger);
+      color: var(--danger);
+    }
+
+    .message.info {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid #3b82f6;
+      color: #3b82f6;
+    }
     
     /* Footer */
     footer {
@@ -519,9 +579,8 @@
       <li><a href="index.html#team">Team</a></li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
-    <div class="auth-buttons">
-      <a href="auth.html" class="login-btn active">Login</a>
-      <a href="auth.html" class="signup-btn">Sign Up</a>
+    <div class="auth-buttons" id="authButtons">
+      <!-- This will be dynamically populated -->
     </div>
   </nav>
 
@@ -541,6 +600,8 @@
       <div class="auth-content">
         <!-- Login Form -->
         <form class="auth-form active" id="loginForm">
+          <div id="loginMessage"></div>
+          
           <div class="form-group">
             <label for="loginEmail">Email Address</label>
             <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
@@ -571,11 +632,11 @@
           </div>
           
           <div class="social-login">
-            <button type="button" class="social-btn google">
+            <button type="button" class="social-btn google" id="googleLogin">
               <i class="fab fa-google"></i>
               Google
             </button>
-            <button type="button" class="social-btn github">
+            <button type="button" class="social-btn github" id="githubLogin">
               <i class="fab fa-github"></i>
               GitHub
             </button>
@@ -588,6 +649,8 @@
         
         <!-- Sign Up Form -->
         <form class="auth-form" id="signupForm">
+          <div id="signupMessage"></div>
+          
           <div class="form-group">
             <label for="signupName">Full Name</label>
             <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
@@ -601,7 +664,7 @@
           <div class="form-group">
             <label for="signupPassword">Password</label>
             <div class="password-input">
-              <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
+              <input type="password" id="signupPassword" class="form-control" placeholder="Create a password (min. 6 characters)" required minlength="6">
               <button type="button" class="toggle-password" data-target="signupPassword">
                 <i class="fas fa-eye"></i>
               </button>
@@ -632,11 +695,11 @@
           </div>
           
           <div class="social-login">
-            <button type="button" class="social-btn google">
+            <button type="button" class="social-btn google" id="googleSignup">
               <i class="fab fa-google"></i>
               Google
             </button>
-            <button type="button" class="social-btn github">
+            <button type="button" class="social-btn github" id="githubSignup">
               <i class="fab fa-github"></i>
               GitHub
             </button>
@@ -706,6 +769,68 @@
   </footer>
 
   <script>
+    // Supabase configuration
+    const SUPABASE_URL = 'https://jylyupfpoxakhmztmckx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5bHl1cGZwb3hha2htenRtY2t4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0ODM5NjYsImV4cCI6MjA3NjA1OTk2Nn0.j4OWfwJUltZd1H0-RAhSrhzXKwhK2fMkdMex0aaby44';
+
+    // Initialize Supabase
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Utility functions
+    function showMessage(elementId, message, type = 'info') {
+      const element = document.getElementById(elementId);
+      element.innerHTML = `<div class="message ${type}">${message}</div>`;
+      setTimeout(() => {
+        element.innerHTML = '';
+      }, 5000);
+    }
+
+    function getInitials(name) {
+      return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    }
+
+    // Check if user is logged in
+    async function checkAuth() {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (session) {
+        showUserMenu(session.user);
+        return true;
+      } else {
+        showAuthButtons();
+        return false;
+      }
+    }
+
+    function showUserMenu(user) {
+      const authButtons = document.getElementById('authButtons');
+      const initials = getInitials(user.user_metadata?.full_name || user.email);
+      
+      authButtons.innerHTML = `
+        <div class="user-menu">
+          <div class="user-avatar" title="${user.email}">${initials}</div>
+          <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+      `;
+    }
+
+    function showAuthButtons() {
+      const authButtons = document.getElementById('authButtons');
+      authButtons.innerHTML = `
+        <a href="auth.html" class="login-btn">Login</a>
+        <a href="auth.html" class="signup-btn">Sign Up</a>
+      `;
+    }
+
+    // Logout function
+    async function logout() {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Logout error:', error);
+      }
+      window.location.href = 'auth.html';
+    }
+
     // Tab switching functionality
     const authTabs = document.querySelectorAll('.auth-tab');
     const authForms = document.querySelectorAll('.auth-form');
@@ -713,17 +838,14 @@
     const switchToLogin = document.querySelector('.switch-to-login');
 
     function switchTab(tabName) {
-      // Update tabs
       authTabs.forEach(tab => {
         tab.classList.toggle('active', tab.dataset.tab === tabName);
       });
       
-      // Update forms
       authForms.forEach(form => {
         form.classList.toggle('active', form.id === `${tabName}Form`);
       });
       
-      // Update header text
       const header = document.querySelector('.auth-header h1');
       const subheader = document.querySelector('.auth-header p');
       
@@ -773,75 +895,170 @@
       });
     });
 
-    // Form validation and submission
+    // Login form submission
     const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
-
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPassword').value;
       
-      // Simple validation
       if (!email || !password) {
-        alert('Please fill in all fields');
+        showMessage('loginMessage', 'Please fill in all fields', 'error');
         return;
       }
       
-      // Simulate login process
-      console.log('Login attempt:', { email, password });
-      alert('Login functionality would be implemented here!');
+      const submitBtn = loginForm.querySelector('.submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing In...';
       
-      // In a real app, you would make an API call to your backend
-      // window.location.href = 'dashboard.html';
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+        
+        if (error) {
+          showMessage('loginMessage', error.message, 'error');
+        } else {
+          showMessage('loginMessage', 'Successfully signed in! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2000);
+        }
+      } catch (error) {
+        showMessage('loginMessage', 'An unexpected error occurred', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+      }
     });
 
-    signupForm.addEventListener('submit', (e) => {
+    // Signup form submission
+    const signupForm = document.getElementById('signupForm');
+    signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
       const name = document.getElementById('signupName').value;
       const email = document.getElementById('signupEmail').value;
       const password = document.getElementById('signupPassword').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
       
-      // Validation
       if (!name || !email || !password || !confirmPassword) {
-        alert('Please fill in all fields');
+        showMessage('signupMessage', 'Please fill in all fields', 'error');
         return;
       }
       
       if (password !== confirmPassword) {
-        alert('Passwords do not match');
+        showMessage('signupMessage', 'Passwords do not match', 'error');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showMessage('signupMessage', 'Password must be at least 6 characters', 'error');
         return;
       }
       
       if (!document.getElementById('agreeTerms').checked) {
-        alert('Please agree to the Terms of Service and Privacy Policy');
+        showMessage('signupMessage', 'Please agree to the Terms of Service and Privacy Policy', 'error');
         return;
       }
       
-      // Simulate signup process
-      console.log('Signup attempt:', { name, email, password });
-      alert('Account created successfully! (This is a demo)');
+      const submitBtn = signupForm.querySelector('.submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating Account...';
       
-      // In a real app, you would make an API call to your backend
-      // Then redirect or show success message
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: name
+            }
+          }
+        });
+        
+        if (error) {
+          showMessage('signupMessage', error.message, 'error');
+        } else {
+          showMessage('signupMessage', 'Account created successfully! Please check your email for verification.', 'success');
+          signupForm.reset();
+          setTimeout(() => {
+            switchTab('login');
+          }, 3000);
+        }
+      } catch (error) {
+        showMessage('signupMessage', 'An unexpected error occurred', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+      }
     });
 
-    // Social login buttons
-    const socialButtons = document.querySelectorAll('.social-btn');
-    
-    socialButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const provider = button.classList.contains('google') ? 'Google' : 'GitHub';
-        alert(`${provider} authentication would be implemented here!`);
-      });
+    // Social login handlers
+    document.getElementById('googleLogin').addEventListener('click', () => {
+      socialLogin('google');
     });
+
+    document.getElementById('githubLogin').addEventListener('click', () => {
+      socialLogin('github');
+    });
+
+    document.getElementById('googleSignup').addEventListener('click', () => {
+      socialLogin('google');
+    });
+
+    document.getElementById('githubSignup').addEventListener('click', () => {
+      socialLogin('github');
+    });
+
+    async function socialLogin(provider) {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+          redirectTo: window.location.origin + '/auth.html'
+        }
+      });
+      
+      if (error) {
+        showMessage('loginMessage', error.message, 'error');
+      }
+    }
 
     // Forgot password
     const forgotPassword = document.querySelector('.forgot-password');
-    forgotPassword.addEventListener('click', (e) => {
+    forgotPassword.addEventListener('click', async (e) => {
       e.preventDefault();
-      alert('Password reset functionality would be implemented here!');
+      const email = prompt('Please enter your email address:');
+      
+      if (email) {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin + '/auth.html'
+        });
+        
+        if (error) {
+          alert('Error: ' + error.message);
+        } else {
+          alert('Password reset instructions have been sent to your email.');
+        }
+      }
+    });
+
+    // Initialize auth state
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuth();
+      
+      // Handle OAuth callback
+      const urlParams = new URLSearchParams(window.location.search);
+      const error = urlParams.get('error');
+      const errorDescription = urlParams.get('error_description');
+      
+      if (error) {
+        showMessage('loginMessage', errorDescription || 'Authentication failed', 'error');
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
     });
   </script>
 </body>
