@@ -96,7 +96,7 @@ nav.scrolled {
   align-items: center;
 }
 
-.btn {
+.auth-buttons a {
   padding: 0.7rem 1.5rem;
   border-radius: 9999px;
   font-weight: 600;
@@ -105,44 +105,34 @@ nav.scrolled {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
 }
 
-.btn-purple {
+.auth-buttons .btn-link {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid transparent;
+}
+
+.auth-buttons .btn-link:hover {
+  background: rgba(139, 92, 246, 0.1);
+  text-decoration: none;
+}
+
+.auth-buttons .btn-purple {
   background-color: var(--primary);
   color: var(--light);
   border: 2px solid var(--primary);
 }
 
-.btn-purple:hover {
+.auth-buttons .btn-purple:hover {
   background-color: var(--primary-dark);
-  border-color: var(--primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
-.btn-outline {
-  background: transparent;
-  color: var(--light);
-  border: 2px solid var(--light);
-}
-
-.btn-outline:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-}
-
-.btn-link {
-  background: transparent;
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.btn-link:hover {
-  text-decoration: underline;
-}
-
-/* User Menu Styles - FIXED */
+/* User Menu Styles */
 .user-menu {
   display: flex;
   align-items: center;
@@ -182,45 +172,13 @@ nav.scrolled {
   transition: all 0.3s;
   font-weight: 500;
   font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
 }
 
 .logout-btn:hover {
   background: var(--danger);
   color: white;
   transform: translateY(-1px);
-}
-
-/* Login/Signup button styles */
-.login-btn {
-  color: var(--light);
-  text-decoration: none;
-  font-weight: 600;
-  padding: 0.7rem 1.5rem;
-  border-radius: 9999px;
-  transition: all 0.3s;
-}
-
-.login-btn:hover {
-  color: var(--primary);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.signup-btn {
-  background-color: var(--primary);
-  color: var(--light);
-  border: 2px solid var(--primary);
-  padding: 0.7rem 1.5rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-}
-
-.signup-btn:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
 /* Hamburger menu for mobile */
@@ -238,30 +196,78 @@ nav.scrolled {
   transition: all 0.3s ease;
 }
 
-/* Hero Section Buttons - FIXED */
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 80vh;
+}
+
+.hero-text {
+  flex: 1;
+  max-width: 600px;
+}
+
+.hero-text h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, var(--light), #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-text h1 span {
+  background: linear-gradient(90deg, var(--primary), #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-text p {
+  color: var(--gray);
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+/* Hero Buttons */
 .hero-buttons {
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-buttons a {
+  padding: 0.7rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
 }
 
 .hero-buttons .btn-purple {
   background-color: var(--primary);
   color: var(--light);
-  border: 2px solid var(--primary);
-  padding: 0.7rem 1.5rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  border-color: var(--primary);
 }
 
 .hero-buttons .btn-purple:hover {
   background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
@@ -269,22 +275,14 @@ nav.scrolled {
 .hero-buttons .btn-outline {
   background: transparent;
   color: var(--light);
-  border: 2px solid var(--light);
-  padding: 0.7rem 1.5rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  border-color: var(--light);
 }
 
 .hero-buttons .btn-outline:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
 }
+
 /* 3D Cube */
 .cube-container {
   flex: 1;
@@ -523,6 +521,7 @@ section {
   color: var(--gray);
   font-size: 1.2rem;
   transition: color 0.3s;
+  text-decoration: none;
 }
 
 .social-links a:hover {
@@ -578,6 +577,7 @@ section {
   border-radius: 0.5rem;
   font-size: 1rem;
   transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
 }
 
 .form-input:focus, .form-textarea:focus {
@@ -589,6 +589,26 @@ section {
 .form-textarea {
   resize: vertical;
   min-height: 150px;
+}
+
+.form .btn-purple {
+  background-color: var(--primary);
+  color: var(--light);
+  border: 2px solid var(--primary);
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.form .btn-purple:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
 /* Footer */
@@ -657,6 +677,7 @@ footer {
   color: var(--gray);
   font-size: 1.5rem;
   transition: color 0.3s;
+  text-decoration: none;
 }
 
 .footer-social a:hover {
@@ -689,6 +710,7 @@ footer {
   visibility: hidden;
   transition: all 0.3s;
   z-index: 99;
+  text-decoration: none;
 }
 
 .back-to-top.visible {
@@ -811,7 +833,7 @@ footer {
     gap: 0.5rem;
   }
   
-  .login-btn, .signup-btn {
+  .auth-buttons a {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
@@ -840,7 +862,7 @@ footer {
     flex-direction: column;
   }
   
-  .btn {
+  .hero-buttons a {
     width: 100%;
     justify-content: center;
   }
