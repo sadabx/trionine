@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trionine - Sign Up & Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --primary-dark: #7c3aed;
+      --dark: #0f0f1b;
+      --dark-light: #1a1a2a;
+      --dark-lighter: #2e2e4d;
+      --light: #ffffff;
+      --gray: #9ca3af;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--primary), #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+    
+    .nav-links li a {
+      text-decoration: none;
+      color: var(--light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-links li a:hover {
+      color: var(--primary);
+    }
+    
+    .nav-links li a.active {
+      color: var(--primary);
+    }
+    
+    .nav-links li a.active::after,
+    .nav-links li a:hover::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width 0.3s;
+    }
+    
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .login-btn {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.7rem 1.5rem;
+      border-radius: 9999px;
+      transition: all 0.3s;
+    }
+    
+    .login-btn:hover {
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .signup-btn {
+      background-color: var(--primary);
+      color: var(--light);
+      border: 2px solid var(--primary);
+      padding: 0.7rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    
+    .signup-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    /* Auth Container */
+    .auth-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .auth-box {
+      background: var(--dark-light);
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      width: 100%;
+      max-width: 450px;
+      transition: all 0.3s ease;
+    }
+    
+    .auth-header {
+      padding: 2rem 2rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid var(--dark-lighter);
+    }
+    
+    .auth-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--light), #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .auth-header p {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--dark-lighter);
+    }
+    
+    .auth-tab {
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      background: transparent;
+      border: none;
+      color: var(--gray);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .auth-tab.active {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+    
+    .auth-tab:hover {
+      color: var(--light);
+      background: rgba(139, 92, 246, 0.1);
+    }
+    
+    .auth-content {
+      padding: 2rem;
+    }
+    
+    .auth-form {
+      display: none;
+    }
+    
+    .auth-form.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--light);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: var(--dark);
+      border: 1px solid var(--dark-lighter);
+      border-radius: 0.5rem;
+      color: var(--light);
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    
+    .password-input {
+      position: relative;
+    }
+    
+    .toggle-password {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--gray);
+      cursor: pointer;
+    }
+    
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .remember-me input {
+      accent-color: var(--primary);
+    }
+    
+    .forgot-password {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 1.5rem;
+    }
+    
+    .submit-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    .divider {
+      text-align: center;
+      margin: 1.5rem 0;
+      position: relative;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--dark-lighter);
+      z-index: 1;
+    }
+    
+    .divider span {
+      background: var(--dark-light);
+      padding: 0 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .social-login {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .social-btn {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid var(--dark-lighter);
+      background: var(--dark);
+      color: var(--light);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .social-btn:hover {
+      border-color: var(--primary);
+      background: rgba(139, 92, 246, 0.1);
+    }
+    
+    .social-btn.google {
+      color: #ea4335;
+    }
+    
+    .social-btn.github {
+      color: var(--light);
+    }
+    
+    .auth-footer {
+      text-align: center;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .auth-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 3rem 4rem 2rem;
+      background: var(--dark);
+      color: var(--gray);
+      text-align: center;
+      margin-top: auto;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-logo {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .footer-text {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      margin: 3rem 0;
+    }
+    
+    .footer-links div {
+      min-width: 180px;
+      text-align: left;
+    }
+    
+    .footer-links h4 {
+      color: var(--light);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .footer-links a {
+      display: block;
+      color: #a0aec0;
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: color 0.3s ease;
+      font-size: 14px;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .footer-social a {
+      color: var(--gray);
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+    
+    .footer-social a:hover {
+      color: var(--primary);
+    }
+    
+    .footer-bottom {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--dark-lighter);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      nav {
+        padding: 1.5rem 2rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .auth-container {
+        padding: 1rem;
+      }
+      
+      .auth-box {
+        max-width: 100%;
+      }
+      
+      .social-login {
+        flex-direction: column;
+      }
+      
+      .footer-links {
+        gap: 2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .auth-header {
+        padding: 1.5rem 1.5rem 1rem;
+      }
+      
+      .auth-content {
+        padding: 1.5rem;
+      }
+      
+      .form-options {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="logo">TRIONINE</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="library.html">Library</a></li>
+      <li><a href="index.html#team">Team</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="auth-buttons">
+      <a href="auth.html" class="login-btn active">Login</a>
+      <a href="auth.html" class="signup-btn">Sign Up</a>
+    </div>
+  </nav>
+
+  <!-- Auth Container -->
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="auth-header">
+        <h1>Welcome Back</h1>
+        <p>Sign in to your Trionine account</p>
+      </div>
+      
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Login</button>
+        <button class="auth-tab" data-tab="signup">Sign Up</button>
+      </div>
+      
+      <div class="auth-content">
+        <!-- Login Form -->
+        <form class="auth-form active" id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <div class="password-input">
+              <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+              <button type="button" class="toggle-password" data-target="loginPassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="rememberMe">
+              Remember me
+            </label>
+            <a href="#" class="forgot-password">Forgot password?</a>
+          </div>
+          
+          <button type="submit" class="submit-btn">Sign In</button>
+          
+          <div class="divider">
+            <span>Or continue with</span>
+          </div>
+          
+          <div class="social-login">
+            <button type="button" class="social-btn google">
+              <i class="fab fa-google"></i>
+              Google
+            </button>
+            <button type="button" class="social-btn github">
+              <i class="fab fa-github"></i>
+              GitHub
+            </button>
+          </div>
+          
+          <div class="auth-footer">
+            Don't have an account? <a href="#" class="switch-to-signup">Sign up</a>
+          </div>
+        </form>
+        
+        <!-- Sign Up Form -->
+        <form class="auth-form" id="signupForm">
+          <div class="form-group">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="signupEmail">Email Address</label>
+            <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <div class="password-input">
+              <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
+              <button type="button" class="toggle-password" data-target="signupPassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="password-input">
+              <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+              <button type="button" class="toggle-password" data-target="confirmPassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="agreeTerms" required>
+              I agree to the <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a>
+            </label>
+          </div>
+          
+          <button type="submit" class="submit-btn">Create Account</button>
+          
+          <div class="divider">
+            <span>Or continue with</span>
+          </div>
+          
+          <div class="social-login">
+            <button type="button" class="social-btn google">
+              <i class="fab fa-google"></i>
+              Google
+            </button>
+            <button type="button" class="social-btn github">
+              <i class="fab fa-github"></i>
+              GitHub
+            </button>
+          </div>
+          
+          <div class="auth-footer">
+            Already have an account? <a href="#" class="switch-to-login">Sign in</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo logo">TRIONINE</div>
+      <p class="footer-text">Pushing the boundaries of digital experiences through innovative design and cutting-edge technology.</p>
+      
+      <div class="footer-links">
+        <div>
+          <h4>Useful Links</h4>
+          <a href="links/linkconverter.html">Link Converter</a>
+          <a href="https://postimages.org/">Post Images</a>
+          <a href="https://limewire.com/">LimeWire</a>
+        </div>
+        
+        <div>
+          <h4>Projects</h4>
+          <a href="projects/sector11.html">Sector 11</a>
+          <a href="projects/mindflow.html">MindFlow</a>
+          <a href="projects/pixel-dungeons.html">Pixel Dungeons</a>
+          <a href="projects/echoverse.html">EchoVerse</a>
+          <a href="projects/all.html">View All</a>
+        </div>
+        
+        <div>
+          <h4>Resources</h4>
+          <a href="blog.html">Blog</a>
+          <a href="docs.html">Documentation</a>
+          <a href="press.html">Press Kit</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+        
+        <div>
+          <h4>Legal</h4>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="cookies.html">Cookie Policy</a>
+          <a href="licenses.html">Licenses</a>
+        </div>
+      </div>
+      
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="https://discord.gg/4JUrBQYdpz"><i class="fab fa-discord"></i></a>
+      </div>
+      
+      <div class="footer-bottom">
+        © 2025 Trionine Studios. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tab switching functionality
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const authForms = document.querySelectorAll('.auth-form');
+    const switchToSignup = document.querySelector('.switch-to-signup');
+    const switchToLogin = document.querySelector('.switch-to-login');
+
+    function switchTab(tabName) {
+      // Update tabs
+      authTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.tab === tabName);
+      });
+      
+      // Update forms
+      authForms.forEach(form => {
+        form.classList.toggle('active', form.id === `${tabName}Form`);
+      });
+      
+      // Update header text
+      const header = document.querySelector('.auth-header h1');
+      const subheader = document.querySelector('.auth-header p');
+      
+      if (tabName === 'login') {
+        header.textContent = 'Welcome Back';
+        subheader.textContent = 'Sign in to your Trionine account';
+      } else {
+        header.textContent = 'Join Trionine';
+        subheader.textContent = 'Create your account to get started';
+      }
+    }
+
+    authTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        switchTab(tab.dataset.tab);
+      });
+    });
+
+    switchToSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchTab('signup');
+    });
+
+    switchToLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchTab('login');
+    });
+
+    // Password visibility toggle
+    const toggleButtons = document.querySelectorAll('.toggle-password');
+    
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetId = button.dataset.target;
+        const passwordInput = document.getElementById(targetId);
+        const icon = button.querySelector('i');
+        
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          passwordInput.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      });
+    });
+
+    // Form validation and submission
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      // Simple validation
+      if (!email || !password) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      // Simulate login process
+      console.log('Login attempt:', { email, password });
+      alert('Login functionality would be implemented here!');
+      
+      // In a real app, you would make an API call to your backend
+      // window.location.href = 'dashboard.html';
+    });
+
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validation
+      if (!name || !email || !password || !confirmPassword) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+      
+      if (!document.getElementById('agreeTerms').checked) {
+        alert('Please agree to the Terms of Service and Privacy Policy');
+        return;
+      }
+      
+      // Simulate signup process
+      console.log('Signup attempt:', { name, email, password });
+      alert('Account created successfully! (This is a demo)');
+      
+      // In a real app, you would make an API call to your backend
+      // Then redirect or show success message
+    });
+
+    // Social login buttons
+    const socialButtons = document.querySelectorAll('.social-btn');
+    
+    socialButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const provider = button.classList.contains('google') ? 'Google' : 'GitHub';
+        alert(`${provider} authentication would be implemented here!`);
+      });
+    });
+
+    // Forgot password
+    const forgotPassword = document.querySelector('.forgot-password');
+    forgotPassword.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Password reset functionality would be implemented here!');
+    });
+  </script>
+</body>
+</html>
