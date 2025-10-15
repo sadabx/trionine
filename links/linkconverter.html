@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Drive Link Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #3367D6;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        a {
+            color: #4285F4;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Google Drive Link Converter</h1>
+        <p>Convert sharing links to direct download links</p>
+        
+        <textarea id="inputLink" rows="3" placeholder="Paste Google Drive share link here (e.g., https://drive.google.com/file/d/FILE_ID/view?usp=sharing)"></textarea>
+        
+        <button onclick="convertLink()">Convert to Download Link</button>
+        
+        <div class="result" id="result" style="display: none;">
+            <h3>Direct Download Link:</h3>
+            <a id="downloadLink" href="" target="_blank"></a>
+            <p>You can right-click the link above and select "Copy link" or click it to download.</p>
+        </div>
+    </div>
+
+    <script>
+        function convertLink() {
+            const inputLink = document.getElementById('inputLink').value.trim();
+            const resultDiv = document.getElementById('result');
+            const downloadLink = document.getElementById('downloadLink');
+            
+            // Extract FILE_ID from the URL
+            const fileIdMatch = inputLink.match(/\/file\/d\/([^\/]+)/);
+            
+            if (fileIdMatch && fileIdMatch[1]) {
+                const fileId = fileIdMatch[1];
+                const directLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
+                
+                downloadLink.textContent = directLink;
+                downloadLink.href = directLink;
+                resultDiv.style.display = 'block';
+            } else {
+                alert("Invalid Google Drive link format. Please make sure it's a sharing link in the format: https://drive.google.com/file/d/FILE_ID/view");
+                resultDiv.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
