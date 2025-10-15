@@ -726,30 +726,74 @@
   const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5bHl1cGZwb3hha2htenRtY2t4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0ODM5NjYsImV4cCI6MjA3NjA1OTk2Nn0.j4OWfwJUltZd1H0-RAhSrhzXKwhK2fMkdMex0aaby44';
   const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+  console.log('🔧 Supabase client initialized');
+
   // Load resources from Supabase
   async function loadResources() {
-    const { data: resources, error } = await supabase
-      .from('resources')
-      .select('*')
-      .order('created_at', { ascending: false });
+    console.log('🔍 Starting to load resources from Supabase...');
+    
+    try {
+      const { data: resources, error } = await supabase
+        .from('resources')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('Error loading resources:', error);
-      return;
+      if (error) {
+        console.error('❌ Supabase Error:', error);
+        document.getElementById('resourcesList').innerHTML = `
+          <div style="text-align: center; padding: 3rem; color: var(--gray);">
+            <h3>Error loading resources</h3>
+            <p>${error.message}</p>
+            <p>Check browser console for details</p>
+          </div>
+        `;
+        return;
+      }
+
+      console.log('✅ Success! Resources loaded:', resources);
+      console.log('📊 Number of resources:', resources.length);
+      
+      if (resources.length === 0) {
+        console.log('ℹ️ No resources found in database');
+        document.getElementById('resourcesList').innerHTML = `
+          <div style="text-align: center; padding: 3rem; color: var(--gray);">
+            <h3>No resources found</h3>
+            <p>The database is empty. Add some resources using the form below!</p>
+          </div>
+        `;
+      } else {
+        displayResources(resources);
+      }
+      
+    } catch (err) {
+      console.error('❌ Unexpected error in loadResources:', err);
+      document.getElementById('resourcesList').innerHTML = `
+        <div style="text-align: center; padding: 3rem; color: var(--danger);">
+          <h3>Unexpected Error</h3>
+          <p>${err.message}</p>
+        </div>
+      `;
     }
-
-    displayResources(resources);
   }
 
   // Display resources in the grid
   function displayResources(resources) {
+    console.log('🎨 Displaying resources in grid...');
     const resourcesList = document.getElementById('resourcesList');
     resourcesList.innerHTML = '';
 
-    resources.forEach(resource => {
+    if (resources.length === 0) {
+      resourcesList.innerHTML = '<p style="text-align: center; color: var(--gray);">No resources to display</p>';
+      return;
+    }
+
+    resources.forEach((resource, index) => {
+      console.log(`📚 Resource ${index + 1}:`, resource.title);
       const resourceCard = createResourceCard(resource);
       resourcesList.appendChild(resourceCard);
     });
+    
+    console.log('✅ All resources displayed');
   }
 
   // Create resource card HTML
@@ -798,6 +842,27 @@
     return levelMap[level] || level;
   }
 
+  // Test Supabase connection
+  async function testSupabaseConnection() {
+    console.log('🔌 Testing Supabase connection...');
+    try {
+      const { data, error } = await supabase
+        .from('resources')
+        .select('count');
+      
+      if (error) {
+        console.error('❌ Supabase connection failed:', error);
+        return false;
+      } else {
+        console.log('✅ Supabase connection successful!');
+        return true;
+      }
+    } catch (err) {
+      console.error('❌ Connection test error:', err);
+      return false;
+    }
+  }
+
   // Form submission handler
   const form = document.getElementById('resourceForm');
   form.addEventListener('submit', async (e) => {
@@ -805,34 +870,39 @@
     
     const formData = new FormData(form);
     const resourceData = {
-      title: formData.get('book-title'),
-      author: formData.get('author'),
-      level: formData.get('educational-level'),
-      subject: formData.get('subject'),
-      description: formData.get('description'),
-      cover_image_url: formData.get('cover-image'),
-      download_url: '#', // You'll need to handle file uploads separately
-      shared_by: 'Anonymous User' // You can implement user authentication later
+      title: document.getElementById('book-title').value,
+      author: document.getElementById('author').value,
+      level: document.getElementById('educational-level').value,
+      subject: document.getElementById('subject').value,
+      description: document.getElementById('description').value,
+      cover_image_url: document.getElementById('cover-image').value,
+      download_url: '#',
+      shared_by: 'Anonymous User'
     };
+
+    console.log('📤 Submitting resource:', resourceData);
 
     const { data, error } = await supabase
       .from('resources')
       .insert([resourceData]);
 
     if (error) {
+      console.error('❌ Form submission error:', error);
       alert('Error submitting resource: ' + error.message);
-      console.error('Error:', error);
     } else {
+      console.log('✅ Resource submitted successfully!');
       alert('Thank you for contributing to our open source library! Your resource will be reviewed and added soon.');
       form.reset();
-      loadResources(); // Refresh the list
+      loadResources();
     }
   });
 
-  // Update the search functionality to work with dynamic content
+  // Search functionality
   function performSearch() {
     const searchTerm = searchInput.value.toLowerCase().trim();
     const resourceCards = document.querySelectorAll('.resource-card');
+    
+    console.log('🔍 Performing search for:', searchTerm);
     
     if (searchTerm !== '') {
       resourceCards.forEach(card => {
@@ -853,8 +923,21 @@
   }
 
   // Initialize when page loads
-  document.addEventListener('DOMContentLoaded', () => {
-    loadResources();
+  document.addEventListener('DOMContentLoaded', async () => {
+    console.log('🚀 Page loaded, initializing...');
+    
+    // Test connection first
+    const connected = await testSupabaseConnection();
+    if (connected) {
+      loadResources();
+    } else {
+      document.getElementById('resourcesList').innerHTML = `
+        <div style="text-align: center; padding: 3rem; color: var(--danger);">
+          <h3>Database Connection Failed</h3>
+          <p>Unable to connect to the database. Please check your Supabase configuration.</p>
+        </div>
+      `;
+    }
     
     // Your existing navigation and filter code remains the same
     const navbar = document.getElementById('navbar');
@@ -901,6 +984,8 @@
         performSearch();
       }
     });
+    
+    console.log('✅ All event listeners initialized');
   });
 </script>
 </body>
