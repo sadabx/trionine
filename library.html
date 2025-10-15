@@ -721,28 +721,41 @@
   </footer>
 
   <script>
-  // Initialize Supabase first
-  console.log('🔧 Initializing Supabase...');
-  
-  const supabaseUrl = 'https://jylyupfpoxakhmztmckx.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5bHl1cGZwb3hha2htenRtY2t4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0ODM5NjYsImV4cCI6MjA3NjA1OTk2Nn0.j4OWfwJUltZd1H0-RAhSrhzXKwhK2fMkdMex0aaby44';
+  // Wait for the Supabase library to load properly
+  console.log('🔧 Waiting for Supabase library to load...');
   
   let supabase;
-  
-  try {
-    supabase = supabase.createClient(supabaseUrl, supabaseKey);
-    console.log('✅ Supabase client created successfully');
-  } catch (error) {
-    console.error('❌ Failed to create Supabase client:', error);
+  let supabaseInitialized = false;
+
+  function initializeSupabase() {
+    try {
+      // Check if supabase is available globally
+      if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
+        console.log('✅ Supabase library found globally');
+        const supabaseUrl = 'https://jylyupfpoxakhmztmckx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5bHl1cGZwb3hha2htenRtY2t4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0ODM5NjYsImV4cCI6MjA3NjA1OTk2Nn0.j4OWfwJUltZd1H0-RAhSrhzXKwhK2fMkdMex0aaby44';
+        
+        supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        supabaseInitialized = true;
+        console.log('✅ Supabase client created successfully');
+        return true;
+      } else {
+        console.error('❌ Supabase library not available');
+        return false;
+      }
+    } catch (error) {
+      console.error('❌ Failed to create Supabase client:', error);
+      return false;
+    }
   }
 
   // Load resources from Supabase
   async function loadResources() {
     console.log('🔍 Starting to load resources from Supabase...');
     
-    if (!supabase) {
+    if (!supabaseInitialized || !supabase) {
       console.error('❌ Supabase client not initialized');
-      showError('Database connection not initialized');
+      showError('Database connection not available. Please refresh the page.');
       return;
     }
     
@@ -777,30 +790,39 @@
   // Helper function to show errors
   function showError(message) {
     const resourcesList = document.getElementById('resourcesList');
-    resourcesList.innerHTML = `
-      <div style="text-align: center; padding: 3rem; color: #ef4444;">
-        <h3>Error</h3>
-        <p>${message}</p>
-        <p>Check browser console for details</p>
-      </div>
-    `;
+    if (resourcesList) {
+      resourcesList.innerHTML = `
+        <div style="text-align: center; padding: 3rem; color: #ef4444;">
+          <h3>Error</h3>
+          <p>${message}</p>
+          <p>Check browser console for details</p>
+        </div>
+      `;
+    }
   }
 
   // Helper function to show messages
   function showMessage(message) {
     const resourcesList = document.getElementById('resourcesList');
-    resourcesList.innerHTML = `
-      <div style="text-align: center; padding: 3rem; color: #9ca3af;">
-        <h3>No Resources</h3>
-        <p>${message}</p>
-      </div>
-    `;
+    if (resourcesList) {
+      resourcesList.innerHTML = `
+        <div style="text-align: center; padding: 3rem; color: #9ca3af;">
+          <h3>No Resources</h3>
+          <p>${message}</p>
+        </div>
+      `;
+    }
   }
 
   // Display resources in the grid
   function displayResources(resources) {
     console.log('🎨 Displaying resources in grid...');
     const resourcesList = document.getElementById('resourcesList');
+    if (!resourcesList) {
+      console.error('❌ Resources list element not found');
+      return;
+    }
+    
     resourcesList.innerHTML = '';
 
     resources.forEach((resource, index) => {
@@ -862,7 +884,7 @@
   async function testSupabaseConnection() {
     console.log('🔌 Testing Supabase connection...');
     
-    if (!supabase) {
+    if (!supabaseInitialized || !supabase) {
       console.error('❌ Supabase client not available for connection test');
       return false;
     }
@@ -885,7 +907,7 @@
     }
   }
 
-  // Form submission handler
+  // Setup form handler
   function setupFormHandler() {
     const form = document.getElementById('resourceForm');
     if (!form) {
@@ -896,7 +918,7 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      if (!supabase) {
+      if (!supabaseInitialized || !supabase) {
         alert('Database connection not available. Please refresh the page.');
         return;
       }
@@ -932,6 +954,26 @@
     console.log('✅ Form handler setup complete');
   }
 
+  // Setup search functionality
+  function setupSearch() {
+    const searchButton = document.getElementById('searchButton');
+    const searchInput = document.getElementById('searchInput');
+    
+    if (!searchButton || !searchInput) {
+      console.error('❌ Search elements not found');
+      return;
+    }
+    
+    searchButton.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        performSearch();
+      }
+    });
+    
+    console.log('✅ Search functionality setup complete');
+  }
+
   // Search functionality
   function performSearch() {
     const searchInput = document.getElementById('searchInput');
@@ -961,26 +1003,6 @@
         card.style.display = 'block';
       });
     }
-  }
-
-  // Setup search functionality
-  function setupSearch() {
-    const searchButton = document.getElementById('searchButton');
-    const searchInput = document.getElementById('searchInput');
-    
-    if (!searchButton || !searchInput) {
-      console.error('❌ Search elements not found');
-      return;
-    }
-    
-    searchButton.addEventListener('click', performSearch);
-    searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        performSearch();
-      }
-    });
-    
-    console.log('✅ Search functionality setup complete');
   }
 
   // Setup filter functionality
@@ -1039,6 +1061,22 @@
   // Initialize when page loads
   document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Page loaded, initializing...');
+    
+    // First, try to initialize Supabase
+    const supabaseReady = initializeSupabase();
+    
+    if (!supabaseReady) {
+      console.error('❌ Supabase initialization failed');
+      showError('Failed to initialize database connection. The Supabase library may not have loaded properly.');
+      
+      // Set up UI functionality anyway (filters, search, etc.)
+      setupNavbar();
+      setupFilters();
+      setupSearch();
+      setupFormHandler();
+      showMessage('Database connection unavailable. Some features may not work.');
+      return;
+    }
     
     // Setup all functionality
     setupNavbar();
