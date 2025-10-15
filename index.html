@@ -324,5 +324,34 @@
   </div>
   <!-- External JavaScript -->
   <script src="js/script.js"></script>
+  <script>
+  // Add this to index.html and library.html
+  const SUPABASE_URL = 'https://jylyupfpoxakhmztmckx.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5bHl1cGZwb3hha2htenRtY2t4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0ODM5NjYsImV4cCI6MjA3NjA1OTk2Nn0.j4OWfwJUltZd1H0-RAhSrhzXKwhK2fMkdMex0aaby44';
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function checkAuth() {
+    const { data: { session } } = await supabase.auth.getSession();
+    const authButtons = document.querySelector('.auth-buttons');
+    
+    if (session) {
+      const initials = session.user.user_metadata?.full_name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U';
+      authButtons.innerHTML = `
+        <div class="user-menu">
+          <div class="user-avatar" title="${session.user.email}">${initials}</div>
+          <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+      `;
+    }
+  }
+
+  async function logout() {
+    await supabase.auth.signOut();
+    window.location.reload();
+  }
+
+  document.addEventListener('DOMContentLoaded', checkAuth);
+</script>
 </body>
 </html>
