@@ -27,10 +27,10 @@
       <li><a href="#team">Team</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <div class="auth-buttons">
-  <a href="auth.html" class="btn-link">Login</a>
-  <a href="auth.html" class="btn-purple">Sign Up</a>
-</div>
+    <div class="auth-buttons" id="authButtons">
+      <a href="auth.html" class="btn-link">Login</a>
+      <a href="auth.html" class="btn-purple">Sign Up</a>
+    </div>
     <div class="hamburger">
       <div></div>
       <div></div>
@@ -38,27 +38,27 @@
     </div>
   </nav>
 
- <!-- Hero Section -->
-<section class="hero fade-in">
-  <div class="hero-text">
-    <h1>Crafting Digital <span>Experiences</span></h1>
-    <p class="delay-1">We create innovative games and apps that push the boundaries of what's possible in digital entertainment and productivity.</p>
-    <div class="hero-buttons delay-2">
-      <a href="#projects" class="btn-purple">Explore Our Work</a>
-      <a href="#contact" class="btn-outline">Get In Touch</a>
+  <!-- Hero Section -->
+  <section class="hero fade-in">
+    <div class="hero-text">
+      <h1>Crafting Digital <span>Experiences</span></h1>
+      <p class="delay-1">We create innovative games and apps that push the boundaries of what's possible in digital entertainment and productivity.</p>
+      <div class="hero-buttons delay-2">
+        <a href="#projects" class="btn-purple">Explore Our Work</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
     </div>
-  </div>
-  <div class="cube-container delay-3">
-    <div class="cube-3d">
-      <div class="front"><i class="fas fa-gamepad"></i></div>
-      <div class="back"><i class="fas fa-code"></i></div>
-      <div class="right"><i class="fas fa-paint-brush"></i></div>
-      <div class="left"><i class="fas fa-mobile-alt"></i></div>
-      <div class="top"><i class="fas fa-brain"></i></div>
-      <div class="bottom"><i class="fas fa-rocket"></i></div>
+    <div class="cube-container delay-3">
+      <div class="cube-3d">
+        <div class="front"><i class="fas fa-gamepad"></i></div>
+        <div class="back"><i class="fas fa-code"></i></div>
+        <div class="right"><i class="fas fa-paint-brush"></i></div>
+        <div class="left"><i class="fas fa-mobile-alt"></i></div>
+        <div class="top"><i class="fas fa-brain"></i></div>
+        <div class="bottom"><i class="fas fa-rocket"></i></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- About Section -->
   <section id="about" class="fade-in">
@@ -112,37 +112,6 @@
           <span class="tag">NFT</span>
         </div>
       </div>
-      <!--
-      <div class="card fade-in delay-2">
-        <h3>MindFlow</h3>
-        <p>AI-enhanced productivity suite that adapts to your cognitive patterns to optimize focus and creativity.</p>
-        <div class="tags">
-          <span class="tag">React Native</span>
-          <span class="tag">AI</span>
-          <span class="tag">Mobile</span>
-        </div>
-      </div>
-      
-      <div class="card fade-in delay-3">
-        <h3>Pixel Dungeons</h3>
-        <p>Procedurally generated roguelike with modern mechanics and retro aesthetic. Daily challenges with global leaderboards.</p>
-        <div class="tags">
-          <span class="tag">Unity</span>
-          <span class="tag">Mobile</span>
-          <span class="tag">Procedural</span>
-        </div>
-      </div> 
-      
-      <div class="card fade-in delay-1">
-        <h3>EchoVerse</h3>
-        <p>Augmented reality platform that layers interactive soundscapes and visual elements onto physical spaces.</p>
-        <div class="tags">
-          <span class="tag">AR</span>
-          <span class="tag">iOS/Android</span>
-          <span class="tag">Spatial Audio</span>
-        </div>
-      </div>
-      -->
       <div class="card fade-in delay-2">
         <h3>SoundScape</h3>
         <p>Generative music application using machine learning to create personalized compositions based on mood and activity.</p>
@@ -270,37 +239,37 @@
       <div class="footer-links">
         <div>
           <h4>Quick Links</h4>
-          <p>Home</p>
-          <p>About</p>
-          <p>Projects</p>
-          <p>Team</p>
-          <p>Contact</p>
+          <a href="#">Home</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#team">Team</a>
+          <a href="#contact">Contact</a>
         </div>
         
         <div>
           <h4>Projects</h4>
-          <p>Sector 11</p>
-          <p>MindFlow</p>
-          <p>Pixel Dungeons</p>
-          <p>EchoVerse</p>
-          <p>View All</p>
+          <a href="#">Sector 11</a>
+          <a href="#">MindFlow</a>
+          <a href="#">Pixel Dungeons</a>
+          <a href="#">EchoVerse</a>
+          <a href="#">View All</a>
         </div>
         
         <div>
           <h4>Resources</h4>
-          <p>Blog</p>
-          <p>Documentation</p>
-          <p>Press Kit</p>
-          <p>Careers</p>
-          <p>FAQ</p>
+          <a href="#">Blog</a>
+          <a href="#">Documentation</a>
+          <a href="#">Press Kit</a>
+          <a href="#">Careers</a>
+          <a href="#">FAQ</a>
         </div>
         
         <div>
           <h4>Legal</h4>
-          <p>Privacy Policy</p>
-          <p>Terms of Service</p>
-          <p>Cookie Policy</p>
-          <p>Licenses</p>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Licenses</a>
         </div>
       </div>
       
@@ -322,52 +291,65 @@
   <div class="back-to-top">
     <i class="fas fa-arrow-up"></i>
   </div>
+
   <!-- External JavaScript -->
   <script src="js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  // Supabase configuration
-  const SUPABASE_URL = 'https://jylyupfpoxakhmztmckx.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5bHl1cGZwb3hha2htenRtY2t4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0ODM5NjYsImV4cCI6MjA3NjA1OTk2Nn0.j4OWfwJUltZd1H0-RAhSrhzXKwhK2fMkdMex0aaby44';
+  <script>
+    // Supabase configuration
+    const SUPABASE_URL = 'https://jylyupfpoxakhmztmckx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5bHl1cGZwb3hha2htenRtY2t4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0ODM5NjYsImV4cCI6MjA3NjA1OTk2Nn0.j4OWfwJUltZd1H0-RAhSrhzXKwhK2fMkdMex0aaby44';
 
-  // Initialize Supabase
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Initialize Supabase
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // Check authentication state
-  async function checkAuth() {
-    const { data: { session } } = await supabase.auth.getSession();
-    const authButtons = document.getElementById('authButtons');
-    
-    if (session && authButtons) {
-      showUserMenu(session.user);
+    // Check authentication state
+    async function checkAuth() {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        const authButtons = document.getElementById('authButtons');
+        
+        if (session && authButtons) {
+          showUserMenu(session.user);
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+      }
     }
-  }
 
-  // Show user menu with ICON (not initials)
-  function showUserMenu(user) {
-    const authButtons = document.getElementById('authButtons');
-    
-    authButtons.innerHTML = `
-      <div class="user-menu">
-        <div class="user-avatar" title="${user.email}">
-          <i class="fas fa-user"></i>
-        </div>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-      </div>
-    `;
-  }
-
-  // Logout function
-  async function logout() {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error('Logout error:', error);
+    // Show user menu with ICON
+    function showUserMenu(user) {
+      const authButtons = document.getElementById('authButtons');
+      
+      if (authButtons) {
+        authButtons.innerHTML = `
+          <div class="user-menu">
+            <div class="user-avatar" title="${user.email}">
+              <i class="fas fa-user"></i>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+          </div>
+        `;
+      }
     }
-    window.location.reload();
-  }
 
-  // Initialize when page loads
-  document.addEventListener('DOMContentLoaded', checkAuth);
-</script>
+    // Logout function
+    async function logout() {
+      try {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+          console.error('Logout error:', error);
+        }
+        window.location.reload();
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      checkAuth();
+    });
+  </script>
 </body>
 </html>
