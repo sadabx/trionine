@@ -132,11 +132,12 @@ nav.scrolled {
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
-/* User Menu Styles */
+/* User Menu Dropdown Styles */
 .user-menu {
   display: flex;
   align-items: center;
   gap: 1rem;
+  position: relative;
 }
 
 .user-avatar {
@@ -148,37 +149,95 @@ nav.scrolled {
   align-items: center;
   justify-content: center;
   color: white;
-  border: 2px solid var(--primary-dark);
-  transition: all 0.3s ease;
   cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
 }
 
 .user-avatar:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+  border-color: var(--primary-dark);
 }
 
 .user-avatar i {
   font-size: 1.2rem;
 }
 
-.logout-btn {
-  background: transparent;
-  border: 1px solid var(--danger);
-  color: var(--danger);
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  cursor: pointer;
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: var(--dark-light);
+  border: 1px solid var(--dark-lighter);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  min-width: 200px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--dark-lighter);
+}
+
+.dropdown-header .user-name {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--light);
+}
+
+.dropdown-header .user-email {
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--light);
+  text-decoration: none;
   transition: all 0.3s;
-  font-weight: 500;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
   font-size: 0.9rem;
   font-family: 'Inter', sans-serif;
 }
 
-.logout-btn:hover {
-  background: var(--danger);
-  color: white;
-  transform: translateY(-1px);
+.dropdown-item:hover {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--primary);
+}
+
+.dropdown-item i {
+  width: 16px;
+  text-align: center;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--dark-lighter);
+  margin: 0.25rem 0;
+}
+
+/* Remove old logout button styles */
+.logout-btn {
+  display: none;
 }
 
 /* Hamburger menu for mobile */
