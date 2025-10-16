@@ -1,165 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trionine - Open Source Library</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- External CSS -->
-  <link rel="stylesheet" href="css/library.css">
-</head>
-<body>
-  <!-- Navigation -->
-  <nav id="navbar">
-    <div class="logo">TRIONINE</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="index.html#projects">Projects</a></li>
-      <li><a href="library.html" class="active">Library</a></li>
-      <li><a href="index.html#team">Team</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-    </ul>
-    <div class="auth-buttons">
-      <a href="#" class="login-btn">Login</a>
-      <a href="#" class="signup-btn">Sign Up</a>
-    </div>
-  </nav>
-
-  <!-- Library Hero Section -->
-  <section class="library-hero">
-    <h1>Open Source Library</h1>
-    <p>Find and share educational resources freely to support learning at all levels</p>
-    
-    <div class="search-section">
-      <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search for books, materials, or topics..." id="searchInput">
-        <button class="search-button" id="searchButton">Search</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trionine - Open Source Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/library.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav id="navbar">
+      <div class="logo">TRIONINE</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="library.html" class="active">Library</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="auth-buttons" id="authButtons">
+        <a href="auth.html" class="login-btn">Login</a>
+        <a href="auth.html" class="signup-btn">Sign Up</a>
       </div>
-    </div>
-  </section>
+    </nav>
 
-  <!-- Filters -->
-  <div class="filters">
-    <button class="filter-btn active" data-filter="all">All Resources</button>
-    <button class="filter-btn" data-filter="ssc">SSC Level</button>
-    <button class="filter-btn" data-filter="intermediate">Intermediate Level</button>
-    <button class="filter-btn" data-filter="admission">University Admission</button>
-    <button class="filter-btn" data-filter="university">University Level</button>
-    <button class="filter-btn" data-filter="other">Others</button>
-  </div>
+    <!-- Library Hero Section -->
+    <section class="library-hero">
+      <h1>Open Source Library</h1>
+      <p>
+        Find and share educational resources freely to support learning at all
+        levels
+      </p>
 
-  
-  <!-- Resources Grid -->
-  <section class="resources-grid">
-   <div class="resources-list" id="resourcesList">
-  <!-- Resources will be loaded dynamically from Supabase -->
-</div>
-  </section>
+      <div class="search-section">
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search for books, materials, or topics..."
+            id="searchInput"
+          />
+          <button class="search-button" id="searchButton">Search</button>
+        </div>
+      </div>
+    </section>
 
- <!-- Resource Submission Form -->
-<section class="resource-form">
-  <h2>Share your resources</h2>
-  <p>Contribute to our open-source library and help others learn</p>
-  
-  <form id="resourceForm">
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="book-title">Book Title</label>
-        <input type="text" id="book-title" class="form-control" placeholder="Enter the book title" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="author">Author</label>
-        <input type="text" id="author" class="form-control" placeholder="Enter the author's name" required>
-      </div>
+    <!-- Filters -->
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All Resources</button>
+      <button class="filter-btn" data-filter="ssc">SSC Level</button>
+      <button class="filter-btn" data-filter="intermediate">
+        Intermediate Level
+      </button>
+      <button class="filter-btn" data-filter="admission">
+        University Admission
+      </button>
+      <button class="filter-btn" data-filter="university">
+        University Level
+      </button>
+      <button class="filter-btn" data-filter="other">Others</button>
     </div>
-    
-    <div class="form-group">
-      <label for="educational-level">Educational Level</label>
-      <select id="educational-level" class="form-control" required>
-        <option value="">Select educational level</option>
-        <option value="ssc">SSC Level</option>
-        <option value="intermediate">Intermediate Level</option>
-        <option value="admission">University Admission</option>
-        <option value="university">University Level</option>
-        <option value="other">Others</option>
-      </select>
-    </div>
-    
-    <div class="form-group">
-      <label for="download-link">Download Link</label>
-      <input type="url" id="download-link" class="form-control" placeholder="Paste the download link for the resource" required>
-    </div>
-    
-    <div class="form-group">
-      <label for="cover-image">Cover Image URL</label>
-      <input type="url" id="cover-image" class="form-control" placeholder="Paste image URL for book cover">
-    </div>
-    
-    <button type="submit" class="btn-purple submit-btn">Share Resource</button>
-  </form>
-</section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo logo">TRIONINE</div>
-      <p class="footer-text">Pushing the boundaries of digital experiences through innovative design and cutting-edge technology.</p>
-      
-      <div class="footer-links">
-  <div>
-    <h4>Useful Links</h4>
-    <a href="links/linkconverter.html">Link Converter</a>
-    <a href="https://postimages.org/">Post Images</a>
-    <a href="https://limewire.com/">LimeWire</a>
-  </div>
-  
-  <div>
-    <h4>Projects</h4>
-    <a href="projects/sector11.html">Sector 11</a>
-    <a href="projects/mindflow.html">MindFlow</a>
-    <a href="projects/pixel-dungeons.html">Pixel Dungeons</a>
-    <a href="projects/echoverse.html">EchoVerse</a>
-    <a href="projects/all.html">View All</a>
-  </div>
-  
-  <div>
-    <h4>Resources</h4>
-    <a href="blog.html">Blog</a>
-    <a href="docs.html">Documentation</a>
-    <a href="press.html">Press Kit</a>
-    <a href="careers.html">Careers</a>
-    <a href="faq.html">FAQ</a>
-  </div>
-  
-  <div>
-    <h4>Legal</h4>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms of Service</a>
-    <a href="cookies.html">Cookie Policy</a>
-    <a href="licenses.html">Licenses</a>
-  </div>
-</div>
-      
-      <div class="footer-social">
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="https://discord.gg/4JUrBQYdpz"><i class="fab fa-discord"></i></a>
+    <!-- Resources Grid -->
+    <section class="resources-grid">
+      <div class="resources-list" id="resourcesList">
+        <!-- Resources will be loaded dynamically from Supabase -->
       </div>
-      
-      <div class="footer-bottom">
-        © 2025 Trionine Studios. All rights reserved.
+    </section>
+
+    <!-- Resource Submission Form -->
+    <section class="resource-form" id="resourceFormSection">
+      <h2>Share your resources</h2>
+      <p>Contribute to our open-source library and help others learn</p>
+
+      <form id="resourceForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="book-title">Book Title</label>
+            <input
+              type="text"
+              id="book-title"
+              class="form-control"
+              placeholder="Enter the book title"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="author">Author</label>
+            <input
+              type="text"
+              id="author"
+              class="form-control"
+              placeholder="Enter the author's name"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="educational-level">Educational Level</label>
+          <select id="educational-level" class="form-control" required>
+            <option value="">Select educational level</option>
+            <option value="ssc">SSC</option>
+            <option value="intermediate">HSC</option>
+            <option value="admission">Admission</option>
+            <option value="university">University</option>
+            <option value="other">Others</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="download-link">Download Link</label>
+          <input
+            type="url"
+            id="download-link"
+            class="form-control"
+            placeholder="Paste the download link for the resource"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="cover-image">Cover Image URL</label>
+          <input
+            type="url"
+            id="cover-image"
+            class="form-control"
+            placeholder="Paste image URL for book cover"
+          />
+        </div>
+
+        <button type="submit" class="btn-purple submit-btn" id="submitBtn">
+          Share Resource
+        </button>
+        <div
+          id="formMessage"
+          style="text-align: center; margin-top: 1rem"
+        ></div>
+      </form>
+
+      <div
+        id="loginPrompt"
+        style="
+          text-align: center;
+          padding: 2rem;
+          background: var(--dark-lighter);
+          border-radius: 0.5rem;
+          margin-top: 2rem;
+          display: none;
+        "
+      >
+        <h3>Login Required</h3>
+        <p>You need to be logged in to share resources.</p>
+        <a href="auth.html" class="btn-purple" style="margin-top: 1rem"
+          >Login Now</a
+        >
       </div>
-    </div>
-  </footer>
-  <!-- External JavaScript -->
-  <script src="js/library.js"></script>
-</body>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo logo">TRIONINE</div>
+        <p class="footer-text">
+          Pushing the boundaries of digital experiences through innovative
+          design and cutting-edge technology.
+        </p>
+
+        <div class="footer-links">
+          <div>
+            <h4>Useful Links</h4>
+            <a href="links/linkconverter.html">Link Converter</a>
+            <a href="https://postimages.org/">Post Images</a>
+            <a href="https://limewire.com/">LimeWire</a>
+          </div>
+
+          <div>
+            <h4>Projects</h4>
+            <a href="projects/sector11.html">Sector 11</a>
+            <a href="projects/mindflow.html">MindFlow</a>
+            <a href="projects/pixel-dungeons.html">Pixel Dungeons</a>
+            <a href="projects/echoverse.html">EchoVerse</a>
+            <a href="projects/all.html">View All</a>
+          </div>
+
+          <div>
+            <h4>Resources</h4>
+            <a href="blog.html">Blog</a>
+            <a href="docs.html">Documentation</a>
+            <a href="press.html">Press Kit</a>
+            <a href="careers.html">Careers</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+
+          <div>
+            <h4>Legal</h4>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="cookies.html">Cookie Policy</a>
+            <a href="licenses.html">Licenses</a>
+          </div>
+        </div>
+
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="https://discord.gg/4JUrBQYdpz"
+            ><i class="fab fa-discord"></i
+          ></a>
+        </div>
+
+        <div class="footer-bottom">
+          © 2025 Trionine Studios. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- External JavaScript Files -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/library.js"></script>
+  </body>
 </html>
