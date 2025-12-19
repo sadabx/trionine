@@ -43,7 +43,51 @@
     });
     
     // Form submission
-    
+    // Get the form element
+const form = document.getElementById("contact-form");
+
+async function handleSubmit(event) {
+  event.preventDefault(); // 1. STOPS THE REDIRECT
+
+  const status = document.getElementById("form-status");
+  const data = new FormData(event.target);
+
+  try {
+    // 2. Send data to Formspree in the background
+    const response = await fetch(event.target.action, {
+      method: form.method,
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    // 3. Handle Success
+    if (response.ok) {
+      status.innerHTML = "Thanks for your submission!";
+      status.style.color = "#10b981"; // Green color
+      form.reset(); // Clear the form
+    } else {
+      // 4. Handle Errors
+      const jsonData = await response.json();
+      if (Object.hasOwn(jsonData, 'errors')) {
+        status.innerHTML = jsonData.errors.map(error => error.message).join(", ");
+      } else {
+        status.innerHTML = "Oops! There was a problem submitting your form";
+      }
+      status.style.color = "#ef4444"; // Red color
+    }
+  } catch (error) {
+    status.innerHTML = "Oops! There was a problem submitting your form";
+    status.style.color = "#ef4444";
+  }
+}
+
+// Attach the function to the form
+if (form) {
+  form.addEventListener("submit", handleSubmit);
+}
+
     // Animation on scroll
     const fadeElements = document.querySelectorAll('.fade-in');
     
