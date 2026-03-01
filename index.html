@@ -190,53 +190,11 @@
           <h3>Sadab Khan</h3>
           <p>Lead Developer & Founder</p>
           <div class="social-links">
-            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="https://github.com/sadabx"><i class="fab fa-github"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-linkedin"></i></a>
           </div>
         </div>
-
-        <div class="team-card fade-in delay-2">
-          <img
-            src="https://i.postimg.cc/QCrqf7nF/Hashida-Itaru.jpg"
-            alt="Hashida Itaru"
-            class="team-avatar"
-          />
-          <h3>Hashida Itaru</h3>
-          <p>Cyber Expert</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-artstation"></i></a>
-          </div>
-        </div>
-
-        <div class="team-card fade-in delay-3">
-          <img
-            src="https://i.postimg.cc/NjPSpN8L/okabe.jpg"
-            alt="Okabe"
-            class="team-avatar"
-          />
-          <h3>Hououin Kyouma</h3>
-          <p>Data Analyst</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-          </div>
-        </div>
-
-        <div class="team-card fade-in delay-4">
-          <img
-            src="https://i.postimg.cc/SKWzQPxv/7866a77bc617ed045b898bf995573789.jpg"
-            alt="Lloyd"
-            class="team-avatar"
-          />
-          <h3>Lloyd Frontera</h3>
-          <p>Structure Designer</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-dribbble"></i></a>
-            <a href="#"><i class="fab fa-behance"></i></a>
-          </div>
         </div>
       </div>
     </section>
@@ -354,7 +312,7 @@
         </div>
 
         <div class="footer-bottom">
-          © 2025 Trionine Studios. All rights reserved.
+          © <span id="year"></span> Trionine Studios. All rights reserved.
         </div>
       </div>
     </footer>
@@ -363,6 +321,10 @@
     <div class="back-to-top">
       <i class="fas fa-arrow-up"></i>
     </div>
+    <!-- Internal JS -->
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 
     <!-- External JavaScript -->
     <script src="js/script.js"></script>
