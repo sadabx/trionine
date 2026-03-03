@@ -21,3 +21,15 @@ trionine/
 ├── index.html                 # Homepage / Landing page
 ├── library.html               # Educational resource library interface
 └── README.md                  # Project documentation
+```
+# New Structure: Trionine
+
+```text
+trionine/
+├── assets/
+│   ├── .gitignore             # Git ignore rules for assets
+│   └── favicon.ico            # Website favicon
+├── index.html                 # Homepage / Landing page
+├── styles.css                 # Global website stylesheets
+├── script.js                  # Main UI interactions and navigation
+└── README.md                  # Project documentation
