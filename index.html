@@ -1,880 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trionine · digital studio</title>
-  <meta name="description" content="Creative studio specializing in innovative games and applications that push boundaries" />
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  
-  <!-- GitHub system fonts: Inter + SF Mono fallback -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    /* ----- GITHUB DARK (refined) ----- */
-    :root {
-      --bg-primary: #0d1117;
-      --bg-secondary: #161b22;
-      --bg-tertiary: #21262d;
-      --border-primary: #30363d;
-      --border-secondary: #3d444d;
-      --fg-default: #f0f6fc;
-      --fg-muted: #8b949e;
-      --fg-subtle: #6e7681;
-      --accent-blue: #2f81f7;
-      --accent-green: #3fb950;
-      --accent-red: #f85149;
-      --btn-bg: #238636;
-      --btn-bg-hover: #2ea043;
-      --btn-border: rgba(240,246,252,0.1);
-      --lang-dot: #f1e05a; /* default, will be overridden per language */
-      --radius-md: 6px;
-      --radius-lg: 8px;
-      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      --font-mono: 'SF Mono', 'Cascadia Code', 'Roboto Mono', 'Courier New', monospace;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trionine · digital studio</title>
+    <meta
+      name="description"
+      content="Creative studio specializing in innovative games and applications that push boundaries"
+    />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--bg-primary);
-      color: var(--fg-default);
-      font-family: var(--font-sans);
-      line-height: 1.5;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 72px; /* offset for fixed header */
-    }
-
-    /* ----- refined navbar (scroll effect) ----- */
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.6rem 2rem;
-      background-color: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-primary);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      transition: background-color 0.2s ease, border-color 0.2s ease, backdrop-filter 0.2s ease;
-    }
-    .navbar.scrolled {
-      background-color: rgba(22, 27, 34, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom-color: var(--border-secondary);
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.4rem;
-      letter-spacing: -0.3px;
-      color: var(--fg-default);
-    }
-    .logo code {
-      font-family: var(--font-mono);
-      background: transparent;
-      color: var(--accent-blue);
-      font-size: 1.2rem;
-      margin-right: 2px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--fg-muted);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: color 0.15s;
-      padding: 0.4rem 0;
-      border-bottom: 2px solid transparent;
-    }
-    .nav-links a:hover {
-      color: var(--fg-default);
-      border-bottom-color: var(--accent-blue);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 4px;
-    }
-    .hamburger div {
-      width: 22px;
-      height: 2px;
-      background-color: var(--fg-muted);
-      transition: 0.2s;
-    }
-
-    /* ----- main layout (sidebar + content) ----- */
-    .app-wrapper {
-      max-width: 1280px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 2rem;
-    }
-
-    /* sidebar — repo style with dynamic active */
-    .sidebar {
-      background-color: transparent;
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-lg);
-      padding: 1.2rem 0;
-      height: fit-content;
-      position: sticky;
-      top: 82px;
-      background-color: var(--bg-secondary);
-    }
-    .sidebar-header {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--fg-subtle);
-      padding: 0 1rem 0.8rem;
-      border-bottom: 1px solid var(--border-primary);
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-    .sidebar-nav {
-      list-style: none;
-    }
-    .sidebar-nav li {
-      margin-bottom: 0.2rem;
-    }
-    .sidebar-nav a {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.5rem 1rem;
-      color: var(--fg-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      border-left: 3px solid transparent;
-      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-    }
-    .sidebar-nav a i {
-      width: 1.2rem;
-      color: var(--fg-subtle);
-      font-size: 1rem;
-    }
-    .sidebar-nav a:hover {
-      background-color: var(--bg-tertiary);
-      color: var(--fg-default);
-    }
-    .sidebar-nav a.active-sidebar {
-      background-color: var(--bg-tertiary);
-      border-left-color: var(--accent-blue);
-      color: var(--fg-default);
-      font-weight: 600;
-    }
-    .sidebar-nav a.active-sidebar i {
-      color: var(--fg-default);
-    }
-
-    /* main content */
-    .main-content {
-      min-width: 0;
-    }
-
-    /* sections as cards */
-    .section-card {
-      background-color: var(--bg-secondary);
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-lg);
-      padding: 2rem 2rem 2.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .section-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--fg-default);
-      margin-bottom: 0.25rem;
-    }
-    .section-subtitle {
-      color: var(--fg-muted);
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-      padding-left: 0.75rem;
-      border-left: 3px solid var(--accent-blue);
-    }
-
-    /* hero — refined, smaller heading, better spacing */
-    .hero-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-lg);
-      padding: 2.2rem 2.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 2.5rem;
-      margin-bottom: 2rem;
-    }
-    .hero-text {
-      flex: 1 1 300px;
-    }
-    .hero-text h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--fg-default);
-      line-height: 1.3;
-      margin-bottom: 0.75rem;
-    }
-    .hero-text h1 span {
-      color: var(--accent-blue);
-      background: none;
-      -webkit-text-fill-color: currentColor;
-    }
-    .hero-text p {
-      color: var(--fg-muted);
-      margin-bottom: 1.5rem;
-      max-width: 500px;
-      font-size: 1rem;
-    }
-
-    /* buttons refined (github flat) */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1.2rem;
-      border-radius: var(--radius-md);
-      font-weight: 600;
-      font-size: 0.9rem;
-      line-height: 1.2;
-      text-decoration: none;
-      cursor: pointer;
-      border: 1px solid var(--border-primary);
-      transition: background-color 0.15s, border-color 0.15s;
-    }
-    .btn-primary {
-      background-color: var(--btn-bg);
-      color: white;
-      border-color: var(--btn-border);
-    }
-    .btn-primary:hover {
-      background-color: var(--btn-bg-hover);
-    }
-    .btn-outline {
-      background-color: transparent;
-      color: var(--fg-default);
-      border-color: var(--border-primary);
-    }
-    .btn-outline:hover {
-      background-color: var(--bg-tertiary);
-      border-color: var(--fg-muted);
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-    }
-
-    /* cube — slowed down, only subtle rotation */
-    .cube-container {
-      flex: 0 0 160px;
-      display: flex;
-      justify-content: center;
-      perspective: 600px;
-    }
-    .cube-3d {
-      width: 120px;
-      height: 120px;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.3s;
-      animation: subtle-spin 18s linear infinite paused; /* paused by default */
-    }
-    .cube-container:hover .cube-3d {
-      animation-play-state: running; /* animate only on hover */
-    }
-    .cube-3d div {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: rgba(33, 38, 45, 0.9);
-      color: var(--accent-blue);
-      border: 1px solid var(--border-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      backdrop-filter: blur(2px);
-    }
-    .front  { transform: translateZ(60px); }
-    .back   { transform: rotateY(180deg) translateZ(60px); }
-    .right  { transform: rotateY(90deg) translateZ(60px); }
-    .left   { transform: rotateY(-90deg) translateZ(60px); }
-    .top    { transform: rotateX(90deg) translateZ(60px); }
-    .bottom { transform: rotateX(-90deg) translateZ(60px); }
-    @keyframes subtle-spin {
-      0% { transform: rotateX(0) rotateY(0); }
-      100% { transform: rotateX(360deg) rotateY(360deg); }
-    }
-
-    /* ----- PROJECT CARDS (repo style, consistent) ----- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .project-card {
-      background-color: var(--bg-primary);
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: border-color 0.2s;
-    }
-    .project-card:hover {
-      border-color: var(--border-secondary);
-    }
-
-    /* for website cards with image */
-    .card-image {
-      width: 100%;
-      height: 150px;
-      background-color: var(--bg-tertiary);
-      border-bottom: 1px solid var(--border-primary);
-      overflow: hidden;
-    }
-    .card-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .card-content {
-      padding: 1.2rem 1.2rem 1.5rem;
-    }
-    .card-content h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--accent-blue);
-      margin-bottom: 0.5rem;
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .card-content h3 a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .card-content h3 a:hover {
-      text-decoration: underline;
-    }
-    .card-content p {
-      color: var(--fg-muted);
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-      line-height: 1.5;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.6rem 1rem;
-      margin-bottom: 1rem;
-      font-size: 0.75rem;
-    }
-    .tag {
-      background-color: transparent;
-      color: var(--fg-muted);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.2rem;
-    }
-    .lang-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-      background-color: var(--lang-dot);
-    }
-    /* language colors simulation */
-    .lang-js .lang-dot { background-color: #f1e05a; }
-    .lang-css .lang-dot { background-color: #563d7c; }
-    .lang-html .lang-dot { background-color: #e34c26; }
-    .lang-cpp .lang-dot { background-color: #f34b7d; }
-
-    .updated-row {
-      color: var(--fg-subtle);
-      font-size: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      margin-top: 0.5rem;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 0.8rem;
-      margin-top: 0.8rem;
-    }
-    .project-links .btn {
-      padding: 0.3rem 0.8rem;
-      font-size: 0.8rem;
-    }
-
-    /* contact form */
-    .contact-form {
-      max-width: 700px;
-    }
-    .form-row {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-    .form-group {
-      flex: 1 1 200px;
-    }
-    .form-input,
-    .form-textarea {
-      width: 100%;
-      background-color: var(--bg-primary);
-      border: 1px solid var(--border-primary);
-      border-radius: var(--radius-md);
-      color: var(--fg-default);
-      padding: 0.6rem 0.8rem;
-      font-size: 0.9rem;
-      transition: border 0.15s, box-shadow 0.1s;
-    }
-    .form-input:focus,
-    .form-textarea:focus {
-      outline: none;
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 0 3px rgba(47,129,247,0.2);
-    }
-    .form-textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    .form-status {
-      margin-top: 1rem;
-      font-weight: 500;
-      color: var(--accent-green);
-    }
-    .contact-email-note {
-      color: var(--fg-muted);
-      font-size: 0.85rem;
-      border-top: 1px dashed var(--border-primary);
-      padding-top: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    /* footer */
-    .footer {
-      background-color: var(--bg-secondary);
-      border-top: 1px solid var(--border-primary);
-      padding: 2rem 2rem 1.2rem;
-      margin-top: 3rem;
-      text-align: center;
-    }
-    .footer-logo {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: var(--fg-default);
-    }
-    .footer-text {
-      color: var(--fg-muted);
-      max-width: 500px;
-      margin: 0.5rem auto 1.5rem;
-      font-size: 0.9rem;
-    }
-    .footer-social {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 1.8rem;
-    }
-    .footer-social a {
-      color: var(--fg-muted);
-      font-size: 1.2rem;
-      transition: color 0.2s;
-    }
-    .footer-social a:hover {
-      color: var(--fg-default);
-    }
-    .footer-bottom {
-      font-size: 0.75rem;
-      color: var(--fg-subtle);
-      border-top: 1px solid var(--border-primary);
-      padding-top: 1.2rem;
-    }
-
-    .back-to-top {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      background-color: var(--bg-secondary);
-      color: var(--fg-muted);
-      border: 1px solid var(--border-primary);
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: 0.15s;
-      text-decoration: none;
-    }
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .back-to-top:hover {
-      background-color: var(--bg-tertiary);
-      color: var(--fg-default);
-      border-color: var(--accent-blue);
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .fade-in.appear {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* responsive */
-    @media (max-width: 900px) {
-      .app-wrapper {
-        grid-template-columns: 1fr;
-        padding: 0 1.5rem;
-      }
-      .sidebar {
-        display: none;
-      }
-      .hero-card {
-        flex-direction: column;
-        text-align: center;
-      }
-      .hero-buttons { justify-content: center; }
-    }
-    @media (max-width: 768px) {
-      .navbar { padding: 0.6rem 1.5rem; }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 58px;
-        right: 1rem;
-        background: var(--bg-secondary);
-        flex-direction: column;
-        width: 200px;
-        padding: 1.2rem;
-        border: 1px solid var(--border-primary);
-        border-radius: var(--radius-lg);
-        gap: 0.8rem;
-      }
-      .nav-links.active { display: flex; }
-      .hamburger { display: flex; }
-    }
-  </style>
-</head>
-<body>
-  <nav class="navbar" id="navbar">
-    <div class="logo"><code>&lt;/&gt;</code> TRIONINE</div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="hamburger" id="hamburger">
-      <div></div><div></div><div></div>
-    </div>
-  </nav>
-
-  <div class="app-wrapper">
-    <!-- sidebar with dynamic active (js will update) -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">NAVIGATION</div>
-      <ul class="sidebar-nav">
-        <li><a href="#" id="link-home" class="active-sidebar"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="#about" id="link-about"><i class="fa fa-book"></i> About</a></li>
-        <li><a href="#projects" id="link-projects"><i class="fa fa-cube"></i> Projects</a></li>
-        <li><a href="#contact" id="link-contact"><i class="fa fa-envelope"></i> Contact</a></li>
-        <li><a href="https://github.com/sadabx" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+    <!-- GitHub system fonts: Inter + SF Mono fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="logo"><code>&lt;/&gt;</code> TRIONINE</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
-    </aside>
-
-    <main class="main-content">
-      <!-- hero (reduced heading) -->
-      <div class="hero-card fade-in" id="home">
-        <div class="hero-text">
-          <h1>Crafting digital <span>experiences</span></h1>
-          <p>We build websites and apps that push the boundaries — with clean, developer‑focused design.</p>
-          <div class="hero-buttons">
-            <a href="#projects" class="btn btn-primary"><i class="fa fa-archive"></i> Explore projects</a>
-            <a href="#contact" class="btn btn-outline"><i class="fa fa-comment"></i> Get in touch</a>
-          </div>
-        </div>
-        <div class="cube-container">
-          <div class="cube-3d">
-            <div class="front"><i class="fas fa-gamepad"></i></div>
-            <div class="back"><i class="fas fa-code"></i></div>
-            <div class="right"><i class="fas fa-microchip"></i></div>
-            <div class="left"><i class="fas fa-mobile-alt"></i></div>
-            <div class="top"><i class="fas fa-brain"></i></div>
-            <div class="bottom"><i class="fas fa-rocket"></i></div>
-          </div>
-        </div>
+      <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
+    </nav>
 
-      <!-- about -->
-      <section id="about" class="section-card fade-in">
-        <h2 class="section-title">About Trionine</h2>
-        <div class="section-subtitle">Creating extraordinary digital experiences since 2023</div>
-        <div style="color: var(--fg-muted); font-size: 0.95rem; display: flex; flex-direction: column; gap: 1.2rem;">
-          <p>Trionine is an independent digital studio focused on building practical, high-impact software. We design and develop web platforms, applications, and experimental tools with a strong emphasis on performance, clarity, and developer-first architecture. Every product is built to be scalable, maintainable, and purpose-driven.</p>
-          <p>Our work combines clean engineering with thoughtful design. From full-stack web systems to embedded projects and experimental game concepts, Trionine explores technology beyond trends. We prioritize structured code, efficient systems, and long-term vision over short-term hype.</p>
-        </div>
-      </section>
+    <div class="app-wrapper">
+      <!-- sidebar with dynamic active (js will update) -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">NAVIGATION</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="#" id="link-home" class="active-sidebar"
+              ><i class="fa fa-home"></i> Home</a
+            >
+          </li>
+          <li>
+            <a href="#about" id="link-about"
+              ><i class="fa fa-book"></i> About</a
+            >
+          </li>
+          <li>
+            <a href="#projects" id="link-projects"
+              ><i class="fa fa-cube"></i> Projects</a
+            >
+          </li>
+          <li>
+            <a href="#contact" id="link-contact"
+              ><i class="fa fa-envelope"></i> Contact</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://sadabx.github.io/"
+              id="link-profile"
+              target="_blank"
+            >
+              <i class="fa-solid fa-compass-drafting"></i> The Architect
+            </a>
+          </li>
+        </ul>
+      </aside>
 
-      <!-- projects grid (populated by js) -->
-      <section id="projects" class="section-card fade-in">
-        <h2 class="section-title">Our projects</h2>
-        <div class="section-subtitle">Innovation at work — explore portfolio</div>
-        <div class="grid" id="projects-grid"></div>
-      </section>
-
-      <!-- contact -->
-      <section id="contact" class="section-card fade-in">
-        <h2 class="section-title">Get in touch</h2>
-        <div class="section-subtitle">Have a project in mind? Let's collaborate.</div>
-        <div class="contact-form">
-          <form id="contact-form" action="https://formspree.io/f/xgvaoqre" method="POST">
-            <div class="form-row">
-              <div class="form-group"><input type="text" name="name" class="form-input" placeholder="Name" required /></div>
-              <div class="form-group"><input type="email" name="email" class="form-input" placeholder="Email" required /></div>
+      <main class="main-content">
+        <!-- hero (reduced heading) -->
+        <div class="hero-card fade-in" id="home">
+          <div class="hero-text">
+            <h1>Crafting digital <span>experiences</span></h1>
+            <p>
+              We build websites and apps that push the boundaries — with clean,
+              developer‑focused design.
+            </p>
+            <div class="hero-buttons">
+              <a href="#projects" class="btn btn-primary"
+                ><i class="fa fa-archive"></i> Explore projects</a
+              >
+              <a href="#contact" class="btn btn-outline"
+                ><i class="fa fa-comment"></i> Get in touch</a
+              >
             </div>
-            <div class="form-group"><textarea name="message" class="form-textarea" placeholder="Your message..." required></textarea></div>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send message</button>
-            <div id="form-status" class="form-status"></div>
-          </form>
-          <div class="contact-email-note"><i class="fa fa-envelope"></i> contact@trionine.xyz</div>
+          </div>
+          <div class="cube-container">
+            <div class="cube-3d">
+              <div class="front"><i class="fas fa-gamepad"></i></div>
+              <div class="back"><i class="fas fa-code"></i></div>
+              <div class="right"><i class="fas fa-microchip"></i></div>
+              <div class="left"><i class="fas fa-mobile-alt"></i></div>
+              <div class="top"><i class="fas fa-brain"></i></div>
+              <div class="bottom"><i class="fas fa-rocket"></i></div>
+            </div>
+          </div>
         </div>
-      </section>
-    </main>
-  </div>
 
-  <footer class="footer fade-in">
-    <div class="footer-logo">TRIONINE</div>
-    <p class="footer-text">Pushing the boundaries of digital experiences through innovative design and technology.</p>
-    <div class="footer-social">
-      <a href="https://x.com/sadabxd"><i class="fab fa-twitter"></i></a>
-      <a href="https://instagram.com/sadab.xd"><i class="fab fa-instagram"></i></a>
-      <a href="https://github.com/sadabx"><i class="fab fa-github"></i></a>
-      <a href="https://t.me/trionine"><i class="fab fa-telegram"></i></a>
-      <a href="https://discord.gg/4JUrBQYdpz"><i class="fab fa-discord"></i></a>
+        <!-- about -->
+        <section id="about" class="section-card fade-in">
+          <h2 class="section-title">About Trionine</h2>
+          <div class="section-subtitle">
+            Creating extraordinary digital experiences since 2023
+          </div>
+          <div
+            style="
+              color: var(--fg-muted);
+              font-size: 0.95rem;
+              display: flex;
+              flex-direction: column;
+              gap: 1.2rem;
+            "
+          >
+            <p>
+              Trionine is an independent digital studio focused on building
+              practical, high-impact software. We design and develop web
+              platforms, applications, and experimental tools with a strong
+              emphasis on performance, clarity, and developer-first
+              architecture. Every product is built to be scalable, maintainable,
+              and purpose-driven.
+            </p>
+            <p>
+              Our work combines clean engineering with thoughtful design. From
+              full-stack web systems to embedded projects and experimental game
+              concepts, Trionine explores technology beyond trends. We
+              prioritize structured code, efficient systems, and long-term
+              vision over short-term hype.
+            </p>
+          </div>
+        </section>
+
+        <!-- projects grid (populated by js) -->
+        <section id="projects" class="section-card fade-in">
+          <h2 class="section-title">Our projects</h2>
+          <div class="section-subtitle">
+            Innovation at work — explore portfolio
+          </div>
+          <div class="grid" id="projects-grid"></div>
+        </section>
+
+        <!-- contact -->
+        <section id="contact" class="section-card fade-in">
+          <h2 class="section-title">Get in touch</h2>
+          <div class="section-subtitle">
+            Have a project in mind? Let's collaborate.
+          </div>
+          <div class="contact-form">
+            <form
+              id="contact-form"
+              action="https://formspree.io/f/xgvaoqre"
+              method="POST"
+            >
+              <div class="form-row">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    name="name"
+                    class="form-input"
+                    placeholder="Name"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="email"
+                    name="email"
+                    class="form-input"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <textarea
+                  name="message"
+                  class="form-textarea"
+                  placeholder="Your message..."
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                <i class="fa fa-paper-plane"></i> Send message
+              </button>
+              <div id="form-status" class="form-status"></div>
+            </form>
+            <div class="contact-email-note">
+              <i class="fa fa-envelope"></i> contact@trionine.xyz
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
-    <div class="footer-bottom">© <span id="year"></span> Trionine Studios. All rights reserved.</div>
-  </footer>
 
-  <a href="#" class="back-to-top" id="backToTop"><i class="fa fa-arrow-up"></i></a>
+    <footer class="footer fade-in">
+      <div class="footer-logo">TRIONINE</div>
+      <p class="footer-text">
+        Pushing the boundaries of digital experiences through innovative design
+        and technology.
+      </p>
+      <div class="footer-social">
+        <a href="https://x.com/sadabxd"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/sadab.xd"
+          ><i class="fab fa-instagram"></i
+        ></a>
+        <a href="https://github.com/sadabx"><i class="fab fa-github"></i></a>
+        <a href="https://t.me/trionine"><i class="fab fa-telegram"></i></a>
+        <a href="https://discord.gg/4JUrBQYdpz"
+          ><i class="fab fa-discord"></i
+        ></a>
+      </div>
+      <div class="footer-bottom">
+        © <span id="year"></span> Trionine Studios. All rights reserved.
+      </div>
+    </footer>
 
-  <script>
-    (function() {
-      // --- year
-      document.getElementById('year').textContent = new Date().getFullYear();
+    <a href="#" class="back-to-top" id="backToTop"
+      ><i class="fa fa-arrow-up"></i
+    ></a>
 
-      // --- navbar scroll effect
-      const navbar = document.getElementById('navbar');
-      const backBtn = document.getElementById('backToTop');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 30) {
-          navbar?.classList.add('scrolled');
-        } else {
-          navbar?.classList.remove('scrolled');
-        }
-        if (window.scrollY > 300) {
-          backBtn?.classList.add('visible');
-        } else {
-          backBtn?.classList.remove('visible');
-        }
-      });
-
-      // --- mobile menu
-      const hamburger = document.getElementById('hamburger');
-      const navLinks = document.getElementById('navLinks');
-      if (hamburger) {
-        hamburger.addEventListener('click', () => {
-          navLinks.classList.toggle('active');
-          hamburger.classList.toggle('active');
-        });
-        document.querySelectorAll('.nav-links a').forEach(link => {
-          link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
-          });
-        });
-      }
-
-      // --- dynamic sidebar active (based on scroll)
-      const sections = [
-        { id: 'home', link: document.getElementById('link-home') },
-        { id: 'about', link: document.getElementById('link-about') },
-        { id: 'projects', link: document.getElementById('link-projects') },
-        { id: 'contact', link: document.getElementById('link-contact') }
-      ];
-
-      function updateSidebar() {
-        const scrollPos = window.scrollY + 100; // offset
-        let current = null;
-        for (let s of sections) {
-          const el = document.getElementById(s.id);
-          if (el && el.offsetTop <= scrollPos) {
-            current = s.link;
-          } else {
-            break;
-          }
-        }
-        sections.forEach(s => {
-          if (s.link) s.link.classList.remove('active-sidebar');
-        });
-        if (current) current.classList.add('active-sidebar');
-        else sections[0]?.link?.classList.add('active-sidebar'); // default home
-      }
-
-      window.addEventListener('scroll', updateSidebar);
-      window.addEventListener('load', updateSidebar);
-
-      // --- projects render (with language dots and updated time)
-      function renderProjects() {
-        const grid = document.getElementById('projects-grid');
-        if (!grid) return;
-
-        const websites = [
-          { title: 'ManifestHub', desc: 'Track game downloads, manage Discord assets.', tags: ['JavaScript'], lang: 'JavaScript', img: 'https://i.postimg.cc/QtfXkJMk/Screenshot_2026_03_02_013220.png', link: 'https://manifesthub.trionine.xyz', updated: '3 days ago' },
-          { title: 'Mermaid Resort', desc: 'Responsive landing page for a coastal resort.', tags: ['HTML', 'CSS'], lang: 'CSS', img: 'https://i.postimg.cc/JnLydxmf/Screenshot_2026_03_02_012944.png', link: 'https://mermaidresort.netlify.app', updated: '12 days ago' }
-        ];
-
-        const githubRepos = [
-          { name: 'esp32-tools', desc: 'ESP32 utilities and firmware tools', lang: 'C++', stars: 24, url: 'https://github.com/sadabx/esp32-tools', updated: '2 days ago' },
-          { name: 'ManifestHub', desc: 'Core backend for ManifestHub', lang: 'JavaScript', stars: 12, url: 'https://github.com/sadabx/ManifestHub', updated: '8 days ago' }
-        ];
-
-        let html = '';
-
-        // website cards
-        websites.forEach(site => {
-          const langClass = site.lang === 'JavaScript' ? 'lang-js' : (site.lang === 'CSS' ? 'lang-css' : '');
-          html += `
-            <div class="project-card">
-              <div class="card-image"><img src="${site.img}" alt="${site.title}"/></div>
-              <div class="card-content">
-                <h3><a href="${site.link}" target="_blank">${site.title}</a></h3>
-                <p>${site.desc}</p>
-                <div class="tags">
-                  <span class="tag ${langClass}"><span class="lang-dot"></span> ${site.lang}</span>
-                  <span class="updated-row"><i class="fa-regular fa-clock"></i> Updated ${site.updated}</span>
-                </div>
-                <div class="project-links">
-                  <a href="${site.link}" class="btn btn-outline"><i class="fa fa-external-link"></i> Visit</a>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-
-        // repo cards
-        githubRepos.forEach(repo => {
-          let langClass = '';
-          if (repo.lang === 'JavaScript') langClass = 'lang-js';
-          else if (repo.lang === 'C++') langClass = 'lang-cpp';
-          html += `
-            <div class="project-card">
-              <div class="card-content">
-                <h3><a href="${repo.url}" target="_blank">${repo.name}</a></h3>
-                <p>${repo.desc}</p>
-                <div class="tags">
-                  <span class="tag ${langClass}"><span class="lang-dot"></span> ${repo.lang}</span>
-                  <span class="tag"><i class="fa fa-star"></i> ${repo.stars}</span>
-                  <span class="updated-row"><i class="fa-regular fa-clock"></i> Updated ${repo.updated}</span>
-                </div>
-                <div class="project-links">
-                  <a href="${repo.url}" class="btn btn-outline"><i class="fab fa-github"></i> Code</a>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-
-        grid.innerHTML = html;
-      }
-      renderProjects();
-
-      // --- contact form
-      const form = document.getElementById('contact-form');
-      const statusDiv = document.getElementById('form-status');
-      if (form) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const data = new FormData(form);
-          statusDiv.innerText = 'Sending...';
-          statusDiv.style.color = 'var(--fg-muted)';
-          try {
-            const response = await fetch(form.action, {
-              method: 'POST',
-              body: data,
-              headers: { Accept: 'application/json' }
-            });
-            if (response.ok) {
-              statusDiv.innerText = 'Message sent successfully!';
-              statusDiv.style.color = 'var(--accent-green)';
-              form.reset();
-            } else {
-              statusDiv.innerText = 'Error sending message.';
-              statusDiv.style.color = 'var(--accent-red)';
-            }
-          } catch {
-            statusDiv.innerText = 'Network error.';
-            statusDiv.style.color = 'var(--accent-red)';
-          }
-        });
-      }
-
-      // fade observer
-      const faders = document.querySelectorAll('.fade-in');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('appear');
-            observer.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.15 });
-      faders.forEach(el => observer.observe(el));
-    })();
-  </script>
-</body>
+    <script src="script.js">
+    </script>
+  </body>
 </html>
