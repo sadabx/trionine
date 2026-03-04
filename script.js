@@ -76,15 +76,15 @@
               lang: "JavaScript",
               img: "https://i.postimg.cc/QtfXkJMk/Screenshot_2026_03_02_013220.png",
               link: "https://manifesthub.trionine.xyz",
-              updated: "3 days ago",
+              // updated: "3 days ago",
             },
             {
               title: "Mermaid Resort",
               desc: "Responsive landing page for a coastal resort.",
               lang: "CSS",
-              img: "https://i.postimg.cc/JnLydxmf/Screenshot_2026_03_02_012944.png",
-              link: "https://mermaidresort.netlify.app",
-              updated: "12 days ago",
+              img: "https://i.postimg.cc/15TJY28t/Screenshot-2026-03-04-183707.png",
+              link: "https://mermaid.trionine.xyz",
+              // updated: "12 days ago",
             },
           ];
 
