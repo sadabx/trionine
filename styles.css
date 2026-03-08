@@ -427,9 +427,9 @@
         background-color: #563d7c;
       }
       .lang-html .lang-dot {
-        background-color: #e34c26;
+        background-color: #ffa600
       }
-      .lang-cpp .lang-dot {
+      .lang-py .lang-dot {
         background-color: #f34b7d;
       }
 

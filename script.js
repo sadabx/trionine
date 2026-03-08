@@ -123,6 +123,8 @@
             ? "lang-js"
             : repo.language === "CSS"
             ? "lang-css"
+            : repo.language === "HTML"
+            ? "lang-html"
             : "";
 
         // Determine which title to show
@@ -177,8 +179,12 @@
         let langClass =
           repo.language === "JavaScript"
             ? "lang-js"
+            : repo.language === "Python"
+            ? "lang-py"
             : repo.language === "C++"
             ? "lang-cpp"
+            : repo.language === "HTML"
+            ? "lang-html"
             : "";
 
         const updatedDate = new Date(repo.pushed_at || repo.updated_at);
