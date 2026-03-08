@@ -170,7 +170,7 @@
       const allRepos = await response.json();
 
       // Select the public repos you want to feature
-      const projectNames = ["esp32-tools", "lncrawler"];
+      const projectNames = ["ESP32-Tools", "bypass"];
       const filteredRepos = allRepos.filter((repo) =>
         projectNames.includes(repo.name)
       );
