@@ -76,13 +76,13 @@
     const coreWebsites = [
       {
         repoPath: "sadabx/ManifestHub",
-        img: "https://i.postimg.cc/QtfXkJMk/Screenshot_2026_03_02_013220.png",
+        img: "assets/Screenshot_2026_03_02_013220.png",
         link: "https://manifesthub.trionine.xyz",
       },
       {
         repoPath: "sadabx/mermaid-resort",
         customName: "Mermaid Beach Resort",
-        img: "https://i.postimg.cc/15TJY28t/Screenshot_2026_03_04_183707.png",
+        img: "assets/Screenshot_2026_03_04_183707.png",
         link: "https://mermaid.trionine.xyz",
       },
     ];
@@ -170,7 +170,7 @@
       const allRepos = await response.json();
 
       // Select the public repos you want to feature
-      const projectNames = ["ESP32-Tools", "f1"];
+      const projectNames = ["archive", "f1"];
       const filteredRepos = allRepos.filter((repo) =>
         projectNames.includes(repo.name)
       );
@@ -222,7 +222,7 @@
                       }" class="btn btn-outline" target="_blank"><i class="fab fa-github"></i> Code</a>
                       ${
                         repo.homepage
-                          ? `<a href="${repo.homepage}" class="btn btn-outline" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>`
+                          ? `<a href="${repo.homepage}" class="btn btn-outline" target="_blank"><i class="fas fa-external-link-alt"></i> Visit</a>`
                           : ""
                       }
                     </div>
