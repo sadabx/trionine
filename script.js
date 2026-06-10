@@ -43,16 +43,25 @@
   ];
 
   function updateSidebar() {
-    const scrollPos = window.scrollY + 100; // offset
-    let current = null;
-    for (let s of sections) {
-      const el = document.getElementById(s.id);
-      if (el && el.offsetTop <= scrollPos) {
-        current = s.link;
-      } else {
-        break;
+    const marker = window.innerHeight * 0.35;
+    let current = sections[0]?.link || null;
+
+    for (const section of sections) {
+      const el = document.getElementById(section.id);
+      if (!el) continue;
+
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= marker && rect.bottom > marker) {
+        current = section.link;
       }
     }
+
+    const nearPageBottom =
+      window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8;
+    if (nearPageBottom) {
+      current = sections[sections.length - 1]?.link || current;
+    }
+
     sections.forEach((s) => {
       if (s.link) s.link.classList.remove("active-sidebar");
     });
@@ -76,13 +85,13 @@
     const coreWebsites = [
       {
         repoPath: "sadabx/ManifestHub",
-        img: "assets/Screenshot_2026_03_02_013220.png",
+        img: "assets/manifesthub.png",
         link: "https://manifesthub.trionine.xyz",
       },
       {
         repoPath: "sadabx/mermaid-resort",
         customName: "Mermaid Beach Resort",
-        img: "assets/Screenshot_2026_03_04_183707.png",
+        img: "assets/mermaidresort.png",
         link: "https://mermaid.trionine.xyz",
       },
     ];
@@ -171,6 +180,10 @@
 
       // Select the public repos you want to feature
       const projectNames = ["archive", "f1"];
+      const repoImages = {
+        archive: "assets/archive.png",
+        f1: "assets/f1dashboard.png"
+      };
       const filteredRepos = allRepos.filter((repo) =>
         projectNames.includes(repo.name)
       );
@@ -200,6 +213,9 @@
 
         html += `
                 <div class="project-card fade-in appear">
+                  <div class="card-image"><img src="${
+                    repoImages[repo.name]
+                  }" alt="${repo.name.replace(/-/g, " ")}"/></div>
                   <div class="card-content">
                     <h3><a href="${
                       repo.html_url
