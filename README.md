@@ -3,19 +3,13 @@
 ```text
 trionine/
 ├── assets/
-│   ├── favicon.ico                          # Website favicon
-│   ├── manifesthub.png                      # ManifestHub project screenshot
-│   ├── mermaidresort.png                    # Mermaid Beach Resort project screenshot
-│   ├── archive.png                          # Archive project screenshot
-│   ├── f1dashboard.png                      # F1 Dashboard project screenshot
-│   └── Screenshot_*.png                     # Legacy screenshots
-├── drop/                                    # Deprecated features (legacy)
-├── .gitignore                               # Git ignore rules
-├── index.html                               # Homepage / Landing page
-├── styles.css                               # Global website stylesheets
-├── script.js                                # Main UI interactions, scroll spy, and project rendering
-├── README.md                                # Project documentation
-└── .vscode/                                 # (ignored) VS Code settings
+│   ├── favicon.ico
+│   ├── screenshots
+├── .gitignore
+├── index.html
+├── styles.css
+├── script.js
+└── README.md
 ```
 
 # Old Structure: Trionine
@@ -41,3 +35,4 @@ trionine/
 ├── index.html                 # Homepage / Landing page
 ├── library.html               # Educational resource library interface
 └── README.md                  # Project documentation
+```
