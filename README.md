@@ -1,14 +1,21 @@
-# New Structure: Trionine
+# Current Structure: Trionine
 
 ```text
 trionine/
 ├── assets/
-│   ├── .gitignore             # Git ignore rules for assets
-│   └── favicon.ico            # Website favicon
-├── index.html                 # Homepage / Landing page
-├── styles.css                 # Global website stylesheets
-├── script.js                  # Main UI interactions and navigation
-└── README.md                  # Project documentation
+│   ├── favicon.ico                          # Website favicon
+│   ├── manifesthub.png                      # ManifestHub project screenshot
+│   ├── mermaidresort.png                    # Mermaid Beach Resort project screenshot
+│   ├── archive.png                          # Archive project screenshot
+│   ├── f1dashboard.png                      # F1 Dashboard project screenshot
+│   └── Screenshot_*.png                     # Legacy screenshots
+├── drop/                                    # Deprecated features (legacy)
+├── .gitignore                               # Git ignore rules
+├── index.html                               # Homepage / Landing page
+├── styles.css                               # Global website stylesheets
+├── script.js                                # Main UI interactions, scroll spy, and project rendering
+├── README.md                                # Project documentation
+└── .vscode/                                 # (ignored) VS Code settings
 ```
 
 # Old Structure: Trionine
