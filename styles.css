@@ -24,6 +24,60 @@
     monospace;
 }
 
+/* Minimal preloader (light overlay with small moving shape) */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: #ebebeb; /* light neutral background like the example */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.preloader-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader-shape {
+  position: relative;
+  width: 320px;
+  height: 40px;
+}
+.preloader-shape .trail {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06));
+  filter: blur(0.2px);
+}
+.preloader-shape .ship {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 18px;
+  background: #000;
+  border-radius: 6px;
+  box-shadow: 18px 0 0 -6px #000, 6px 0 8px -6px rgba(0,0,0,0.2);
+  animation: ship-move 1.2s linear infinite;
+}
+
+@keyframes ship-move {
+  0% { transform: translate(-40px, -50%); opacity: 0.95 }
+  10% { opacity: 1 }
+  100% { transform: translate(360px, -50%); opacity: 0 }
+}
+
+
+
+
 * {
   margin: 0;
   padding: 0;

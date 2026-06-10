@@ -46,17 +46,8 @@
     const marker = window.innerHeight * 0.35;
     let current = sections[0]?.link || null;
 
-    for (const section of sections) {
-      const el = document.getElementById(section.id);
-      if (!el) continue;
-
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= marker && rect.bottom > marker) {
-        current = section.link;
-      }
-    }
-
     const nearPageBottom =
+  
       window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8;
     if (nearPageBottom) {
       current = sections[sections.length - 1]?.link || current;
@@ -71,6 +62,20 @@
 
   window.addEventListener("scroll", updateSidebar);
   window.addEventListener("load", updateSidebar);
+
+  // minimal preloader hide logic: fade and remove after load
+  (function () {
+    const pre = document.getElementById("preloader");
+    if (!pre) return;
+    // small fade out then remove
+    window.addEventListener("load", () => {
+      pre.style.transition = "opacity 0.45s ease, visibility 0.45s";
+      pre.style.opacity = "0";
+      setTimeout(() => {
+        if (pre.parentNode) pre.parentNode.removeChild(pre);
+      }, 500);
+    });
+  })();
 
   // Project Rendering
   async function renderProjects() {
@@ -298,4 +303,15 @@
     { threshold: 0.15 }
   );
   faders.forEach((el) => observer.observe(el));
+
+  // --- preloader hide on window load
+  const preloader = document.getElementById("preloader");
+  if (preloader) {
+    window.addEventListener("load", () => {
+      preloader.classList.add("loaded");
+      setTimeout(() => {
+        if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+      }, 600);
+    });
+  }
 })();
