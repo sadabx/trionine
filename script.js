@@ -28,10 +28,10 @@
 
   // --- dynamic sidebar active (based on scroll)
   const sections = [
-    { id: "home",     link: document.getElementById("link-home")     },
-    { id: "about",    link: document.getElementById("link-about")    },
+    { id: "home", link: document.getElementById("link-home") },
+    { id: "about", link: document.getElementById("link-about") },
     { id: "projects", link: document.getElementById("link-projects") },
-    { id: "contact",  link: document.getElementById("link-contact")  },
+    { id: "contact", link: document.getElementById("link-contact") },
   ];
 
   function updateSidebar() {
@@ -44,7 +44,8 @@
       if (rect.top <= marker && rect.bottom > marker) current = section.link;
     }
     const nearBottom =
-      window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8;
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight - 8;
     if (nearBottom) current = sections[sections.length - 1]?.link || current;
     sections.forEach((s) => s.link?.classList.remove("active-sidebar"));
     if (current) current.classList.add("active-sidebar");
@@ -65,13 +66,13 @@
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.15 },
   );
 
   function observeFadeIns(root) {
-    root.querySelectorAll(".fade-in:not(.appear)").forEach((el) =>
-      fadeObserver.observe(el)
-    );
+    root
+      .querySelectorAll(".fade-in:not(.appear)")
+      .forEach((el) => fadeObserver.observe(el));
   }
 
   // observe static page elements immediately
@@ -103,16 +104,25 @@
 
     function getLangClass(lang) {
       return (
-        { JavaScript: "lang-js", CSS: "lang-css", HTML: "lang-html",
-          Python: "lang-py", "C++": "lang-cpp" }[lang] || ""
+        {
+          JavaScript: "lang-js",
+          CSS: "lang-css",
+          HTML: "lang-html",
+          Python: "lang-py",
+          "C++": "lang-cpp",
+        }[lang] || ""
       );
     }
 
     function timeAgo(dateStr) {
       const diff = Math.floor(
-        Math.abs(new Date() - new Date(dateStr)) / (1000 * 60 * 60 * 24)
+        Math.abs(new Date() - new Date(dateStr)) / (1000 * 60 * 60 * 24),
       );
-      return diff === 0 ? "today" : diff === 1 ? "yesterday" : `${diff} days ago`;
+      return diff === 0
+        ? "today"
+        : diff === 1
+          ? "yesterday"
+          : `${diff} days ago`;
     }
 
     let html = "";
@@ -120,12 +130,15 @@
     // 1. Private / core websites (authenticated)
     for (const site of coreWebsites) {
       try {
-        const res = await fetch(`https://api.github.com/repos/${site.repoPath}`, {
-          headers: {
-            Authorization: `Bearer ${GITHUB_TOKEN}`,
-            Accept: "application/vnd.github.v3+json",
+        const res = await fetch(
+          `https://api.github.com/repos/${site.repoPath}`,
+          {
+            headers: {
+              Authorization: `Bearer ${GITHUB_TOKEN}`,
+              Accept: "application/vnd.github.v3+json",
+            },
           },
-        });
+        );
         if (!res.ok) throw new Error(`Could not fetch ${site.repoPath}`);
         const repo = await res.json();
         const title = site.customName || repo.name.replace(/-/g, " ");
@@ -153,16 +166,17 @@
     // 2. Public repos
     try {
       const res = await fetch(
-        "https://api.github.com/users/sadabx/repos?sort=updated&per_page=100"
+        "https://api.github.com/users/sadabx/repos?sort=updated&per_page=100",
       );
       if (!res.ok) throw new Error("API limit reached");
       const allRepos = await res.json();
 
       // FIX #4: preserve intentional display order from projectNames array
-      const projectNames = ["archive", "f1"];
+      const projectNames = ["archive", "iptv", "f1"];
       const repoImages = {
         archive: "assets/archive.png",
         f1: "assets/f1dashboard.png",
+        iptv: "assets/iptv.png",
       };
 
       const filteredRepos = projectNames
@@ -206,9 +220,13 @@
     const preloader = document.getElementById("preloader");
     if (!preloader) return;
     preloader.classList.add("preloader-hidden");
-    preloader.addEventListener("transitionend", () => {
-      preloader.style.display = "none";
-    }, { once: true });
+    preloader.addEventListener(
+      "transitionend",
+      () => {
+        preloader.style.display = "none";
+      },
+      { once: true },
+    );
   }
 
   // FIX #1: .finally() ensures preloader always hides even if renderProjects rejects
