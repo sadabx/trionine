@@ -172,11 +172,12 @@
       const allRepos = await res.json();
 
       // FIX #4: preserve intentional display order from projectNames array
-      const projectNames = ["archive", "iptv", "f1"];
+      const projectNames = ["archive", "iptv", "f1", "fifa"];
       const repoImages = {
         archive: "assets/archive.png",
         f1: "assets/f1dashboard.png",
         iptv: "assets/iptv.png",
+        fifa: "assets/fifa.png",
       };
 
       const filteredRepos = projectNames
