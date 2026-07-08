@@ -83,35 +83,20 @@
     const grid = document.getElementById("projects-grid");
     if (!grid) return;
 
-    // ⚠️ SECURITY: PAT is visible in client-side JS.
-    // For production, move this fetch to a backend proxy or GitHub App.
-    const GITHUB_TOKEN =
-      "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";
+    //fallback colors
+    const fallbackColors = {
+      JavaScript: "#f1e05a",
+      HTML: "#e34c26",
+      CSS: "#563d7c",
+      Python: "#3572A5",
+      "C++": "#f34b7d",
+    };
 
-    const coreWebsites = [
-      {
-        repoPath: "sadabx/ManifestHub",
-        img: "assets/manifesthub.png",
-        link: "https://manifesthub.trionine.xyz",
-      },
-      {
-        repoPath: "sadabx/mermaid-resort",
-        customName: "Mermaid Beach Resort",
-        img: "assets/mermaidresort.png",
-        link: "https://mermaid.trionine.xyz",
-      },
-    ];
+    let langColors = {};
 
-    function getLangClass(lang) {
-      return (
-        {
-          JavaScript: "lang-js",
-          CSS: "lang-css",
-          HTML: "lang-html",
-          Python: "lang-py",
-          "C++": "lang-cpp",
-        }[lang] || ""
-      );
+    function getLangColor(lang) {
+      if (!lang) return "#858585";
+      return langColors[lang]?.color || fallbackColors[lang] || "#858585";
     }
 
     function timeAgo(dateStr) {
@@ -126,6 +111,40 @@
     }
 
     let html = "";
+
+    async function getGithubToken() {
+      try {
+        const res = await fetch(".env");
+        if (res.ok) {
+          const text = await res.text();
+          const match = text.match(/GITHUB_TOKEN\s*=\s*[\r\n\s]*(github_pat_[a-zA-Z0-9_]+)/);
+          if (match && match[1]) return match[1];
+        }
+      } catch (e) {
+        // Safe fallback if local fetch is blocked by CORS (e.g. file:// scheme)
+      }
+      return typeof window.GITHUB_TOKEN !== "undefined" ? window.GITHUB_TOKEN : "";
+    }
+
+    const GITHUB_TOKEN = await getGithubToken();
+
+    try {
+      const colorsRes = await fetch("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json");
+      if (colorsRes.ok) {
+        langColors = await colorsRes.json();
+      }
+    } catch (e) {
+      console.warn("Failed to fetch dynamic language colors:", e);
+    }
+
+    const coreWebsites = [
+      // Add future private projects here, e.g.:
+      // {
+      //   repoPath: "sadabx/private-repo",
+      //   img: "assets/private-demo.png",
+      //   link: "https://private.trionine.xyz",
+      // }
+    ];
 
     // 1. Private / core websites (authenticated)
     for (const site of coreWebsites) {
@@ -142,15 +161,17 @@
         if (!res.ok) throw new Error(`Could not fetch ${site.repoPath}`);
         const repo = await res.json();
         const title = site.customName || repo.name.replace(/-/g, " ");
-        const lc = getLangClass(repo.language);
+        const imgHtml = site.img
+          ? `<div class="card-image"><img src="${site.img}" alt="${title}" loading="lazy"/></div>`
+          : "";
         html += `
           <div class="project-card fade-in">
-            <div class="card-image"><img src="${site.img}" alt="${title}" loading="lazy"/></div>
+            ${imgHtml}
             <div class="card-content">
               <h3><a href="${site.link}" target="_blank">${title}</a></h3>
               <p>${repo.description || "No description provided."}</p>
               <div class="tags">
-                ${repo.language ? `<span class="tag ${lc}"><span class="lang-dot"></span> ${repo.language}</span>` : ""}
+                ${repo.language ? `<span class="tag"><span class="lang-dot" style="background-color: ${getLangColor(repo.language)}"></span> ${repo.language}</span>` : ""}
                 <span class="updated-row"><i class="fa-regular fa-clock"></i> Updated ${timeAgo(repo.pushed_at || repo.updated_at)}</span>
               </div>
               <div class="project-links">
@@ -171,13 +192,32 @@
       if (!res.ok) throw new Error("API limit reached");
       const allRepos = await res.json();
 
-      // FIX #4: preserve intentional display order from projectNames array
-      const projectNames = ["archive", "iptv", "f1", "fifa"];
+      const projectNames = [
+        "ManifestHub",
+        "mermaid-resort",
+        "archive",
+        "iptv",
+        "f1",
+        "fifa",
+        "f1-bot",
+        "Resort-react",
+        "TNTV"
+      ];
       const repoImages = {
-        archive: "assets/archive.png",
-        f1: "assets/f1dashboard.png",
-        iptv: "assets/iptv.png",
-        fifa: "assets/fifa.png",
+        ManifestHub: "assets/ss/manifesthub.png",
+        "mermaid-resort": "assets/ss/mermaidresort.png",
+        //need to quote this key bcz it contains '-', in js '-' is used for subtraction
+        archive: "assets/ss/archive.png",
+        f1: "assets/ss/f1dashboard.png",
+        iptv: "assets/ss/iptv.png",
+        fifa: "assets/ss/fifa.png",
+      };
+      const repoCustomNames = {
+        "mermaid-resort": "Mermaid Beach Resort",
+      };
+      const repoHomepages = {
+        ManifestHub: "https://manifesthub.trionine.xyz",
+        "mermaid-resort": "https://mermaid.trionine.xyz",
       };
 
       const filteredRepos = projectNames
@@ -185,24 +225,28 @@
         .filter(Boolean);
 
       filteredRepos.forEach((repo) => {
-        const lc = getLangClass(repo.language);
-        // FIX #7: safe fallback if repoImages entry is missing
-        const img = repoImages[repo.name] || "assets/placeholder.png";
-        const title = repo.name.replace(/-/g, " ");
+        const img = repoImages[repo.name];
+        const title = repoCustomNames[repo.name] || repo.name.replace(/-/g, " ");
+        const homepage = repoHomepages[repo.name] || repo.homepage;
+
+        const imgHtml = img
+          ? `<div class="card-image"><img src="${img}" alt="${title}" loading="lazy"/></div>`
+          : "";
+
         html += `
           <div class="project-card fade-in">
-            <div class="card-image"><img src="${img}" alt="${title}" loading="lazy"/></div>
+            ${imgHtml}
             <div class="card-content">
-              <h3><a href="${repo.html_url}" target="_blank">${title}</a></h3>
+              <h3><a href="${homepage || repo.html_url}" target="_blank">${title}</a></h3>
               <p>${repo.description || "Hosted on GitHub."}</p>
               <div class="tags">
-                ${repo.language ? `<span class="tag ${lc}"><span class="lang-dot"></span> ${repo.language}</span>` : ""}
+                ${repo.language ? `<span class="tag"><span class="lang-dot" style="background-color: ${getLangColor(repo.language)}"></span> ${repo.language}</span>` : ""}
                 <span class="tag"><i class="fa fa-star"></i> ${repo.stargazers_count}</span>
                 <span class="updated-row"><i class="fa-regular fa-clock"></i> Updated ${timeAgo(repo.pushed_at || repo.updated_at)}</span>
               </div>
               <div class="project-links">
                 <a href="${repo.html_url}" class="btn btn-outline" target="_blank"><i class="fab fa-github"></i> Code</a>
-                ${repo.homepage ? `<a href="${repo.homepage}" class="btn btn-outline" target="_blank"><i class="fas fa-external-link-alt"></i> Visit</a>` : ""}
+                ${homepage ? `<a href="${homepage}" class="btn btn-outline" target="_blank"><i class="fas fa-external-link-alt"></i> Visit</a>` : ""}
               </div>
             </div>
           </div>`;

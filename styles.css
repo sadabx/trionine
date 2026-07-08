@@ -337,8 +337,15 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
+  font-weight: 800;
   backdrop-filter: blur(2px);
+}
+
+.cube-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .front {
@@ -465,29 +472,7 @@ html {
   height: 10px;
   border-radius: 50%;
   display: inline-block;
-  background-color: var(--lang-dot);
-}
-
-/* language colors simulation */
-.lang-js .lang-dot {
-  background-color: #f1e05a;
-}
-
-.lang-css .lang-dot {
-  background-color: #563d7c;
-}
-
-.lang-html .lang-dot {
-  background-color: #ffa600
-}
-
-.lang-py .lang-dot {
-  background-color: #f34b7d;
-}
-
-/* FIX #6: C++ language dot was missing */
-.lang-cpp .lang-dot {
-  background-color: #00599c;
+  background-color: #858585;
 }
 
 .updated-row {
