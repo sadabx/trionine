@@ -76,14 +76,14 @@ html {
   font-size: 1.4rem;
   letter-spacing: -0.3px;
   color: var(--fg-default);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.logo code {
-  font-family: var(--font-mono);
-  background: transparent;
-  color: var(--accent-blue);
-  font-size: 1.2rem;
-  margin-right: 2px;
+.nav-brand-icon {
+  height: 28px;
+  width: auto;
 }
 
 .nav-links {
