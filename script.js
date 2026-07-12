@@ -142,7 +142,7 @@
       // {
       //   repoPath: "sadabx/private-repo",
       //   img: "assets/private-demo.png",
-      //   link: "https://private.trionine.xyz",
+      //   link: "https://private.trionine.com",
       // }
     ];
 
@@ -216,8 +216,8 @@
         "mermaid-resort": "Mermaid Beach Resort",
       };
       const repoHomepages = {
-        ManifestHub: "https://manifesthub.trionine.xyz",
-        "mermaid-resort": "https://mermaid.trionine.xyz",
+        ManifestHub: "https://manifesthub.trionine.com",
+        "mermaid-resort": "https://mermaid.trionine.com",
       };
 
       const filteredRepos = projectNames
