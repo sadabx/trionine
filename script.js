@@ -198,10 +198,8 @@
         "archive",
         "iptv",
         "f1",
-        "fifa",
-        "f1-bot",
-        "Resort-react",
-        "TNTV"
+        "TNTV",
+        "Resort-app"
       ];
       const repoImages = {
         ManifestHub: "assets/ss/manifesthub.png",
@@ -224,17 +222,18 @@
         .map((name) => allRepos.find((r) => r.name === name))
         .filter(Boolean);
 
-      filteredRepos.forEach((repo) => {
+      function projectCardHtml(repo) {
         const img = repoImages[repo.name];
         const title = repoCustomNames[repo.name] || repo.name.replace(/-/g, " ");
         const homepage = repoHomepages[repo.name] || repo.homepage;
 
+        const compactClass = img ? "" : " project-card-compact";
         const imgHtml = img
           ? `<div class="card-image"><img src="${img}" alt="${title}" loading="lazy"/></div>`
           : "";
 
-        html += `
-          <div class="project-card fade-in">
+        return `
+          <div class="project-card${compactClass} fade-in">
             ${imgHtml}
             <div class="card-content">
               <h3><a href="${homepage || repo.html_url}" target="_blank">${title}</a></h3>
@@ -250,7 +249,25 @@
               </div>
             </div>
           </div>`;
+      }
+
+      const imageRepos = filteredRepos.filter((repo) => repoImages[repo.name]);
+      const textRepos = filteredRepos.filter((repo) => !repoImages[repo.name]);
+
+      imageRepos.forEach((repo) => {
+        html += projectCardHtml(repo);
       });
+
+      if (imageRepos.length % 2 === 1 && textRepos.length > 0) {
+        html += `
+          <div class="project-stack">
+            ${textRepos.map(projectCardHtml).join("")}
+          </div>`;
+      } else {
+        textRepos.forEach((repo) => {
+          html += projectCardHtml(repo);
+        });
+      }
     } catch (e) {
       console.warn("Public fetch failed:", e);
     }
